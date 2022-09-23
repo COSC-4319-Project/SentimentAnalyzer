@@ -46,13 +46,18 @@ namespace SentimentAnalyzer
                 {
                     if(word.Length > 0)
                     {
-                        Console.WriteLine("TaggedWord: " + word);
-                        TaggedWord aWord;
-                        aWord.word = word;
-                        aWord.tag = Tag.ignore; //Temporary will use lexicon to determine Tag
-
+                        TaggedWord aWord = TagWord(word);
                         sentence.words.Add(aWord);
-                        paragraph.wordCount++;
+                        Console.WriteLine(aWord);//Debuging purposes
+                        sentence.wordCount++;
+                        if (aWord.tag == Tag.negWord)
+                        {
+                            sentence.negWords++;
+                        }
+                        else if(aWord.tag == Tag.posWord)
+                        {
+                            sentence.posWords++;
+                        }
                     }
                 }
                 paragraph.sentences.Add(sentence);
@@ -61,6 +66,22 @@ namespace SentimentAnalyzer
             return paragraph;
         }
 
+        static TaggedWord TagWord(string text)
+        {
+            TaggedWord word = new TaggedWord();
+            word.word = text;
+
+            if (Lexicon.SearchNeg(text))
+            {
+                word.tag = Tag.negWord;
+            }
+            else if (Lexicon.SearchPos(text))
+            {
+                word.tag = Tag.posWord;
+            }
+            //Need check here for negation and targets (targets should be based of product type and pulled specs)
+            return word;
+        }
     }
     //Sentiment Data Structures
     //Extra int fields are to allow detailed analysis later on.
@@ -72,16 +93,24 @@ namespace SentimentAnalyzer
     {
         public string word;
         public Tag tag;
+
+        public override string ToString()
+        {
+            return word + " : " + tag;
+        }
     }
     struct Sentence
     {
         public List<TaggedWord> words;
+        public int wordCount;
+        public int posWords;
+        public int negWords;
     }
     struct Paragraph
     {
         public List<Sentence> sentences;
-        public int wordCount;
-        public int posWords;
-        public int negWords;
+        public int sentCount;
+        public int posSents;
+        public int negSents;
     }
 }
