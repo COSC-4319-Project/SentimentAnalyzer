@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-
 namespace SentimentAnalyzer
 {
     class Lexicon
     {
         public static string posLexLoc = "/Lexicon/positive-words.txt";
         public static string negLexLoc = "/Lexicon/negative-words.txt";
-        public static string negationLexLoc = "/Lexicon/negative-words.txt";
+        public static string negationLexLoc = "/Lexicon/negation-words.txt";
 
         public static List<string> posWords;
         public static List<string> negWords;
