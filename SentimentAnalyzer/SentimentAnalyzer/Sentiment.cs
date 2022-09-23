@@ -15,11 +15,27 @@ namespace SentimentAnalyzer
 
         public static int Analyze(string text, out float negPerc, out float neuPerc, out float posPerc) //Entry point for sentiment class
         {
-            Tokenize(text);
-            negPerc = 0;
-            posPerc = 0;
-            neuPerc = 0;
-            return 0; //Returns -1 negative, 0 netural, 1 positive 
+            Paragraph paragraph = Tokenize(text);
+            negPerc = (float)paragraph.negWords / (float)paragraph.wordCount;
+            posPerc = (float)paragraph.posWords / (float)paragraph.wordCount;
+            neuPerc = ((float)paragraph.wordCount - (float)paragraph.negWords - (float)paragraph.posWords) / (float)paragraph.wordCount;
+            //Debug Outputs
+            Console.WriteLine("Neg %:" + negPerc);
+            Console.WriteLine("Neu %:" + neuPerc);
+            Console.WriteLine("Pos %:" + posPerc);
+            Console.WriteLine("Word cnt:" + paragraph.wordCount);
+            Console.WriteLine("posWord cnt:" + paragraph.posWords);
+            Console.WriteLine("negWord cnt:" + paragraph.negWords);
+
+            if (negPerc > posPerc)
+            {
+                return -1;
+            }
+            else if (negPerc < posPerc)
+            {
+                return 1;
+            }
+            return 0; 
         }
         public static int Analyze(string text) //Calls analyze without additonal info
         {
@@ -41,23 +57,55 @@ namespace SentimentAnalyzer
                 Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
+                bool negation = false; //Flag to negate next word
 
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
                     if(word.Length > 0)
                     {
                         TaggedWord aWord = TagWord(word);
-                        sentence.words.Add(aWord);
-                        Console.WriteLine(aWord);//Debuging purposes
-                        sentence.wordCount++;
+
+                        if (negation) //Negate word
+                        {
+                            negation = false;
+                            aWord.tag = InvertTag(aWord.tag);
+                        }
+                        if (aWord.tag == Tag.negation) //If negation flip previous and next words
+                        {
+                            negation = true; //Flag to negate next word
+                            //Remove last word flip tag and re insert
+                            TaggedWord bWord = sentence.words[sentence.words.Count - 1];
+                            sentence.words.RemoveAt(sentence.words.Count - 1);
+                            if (bWord.tag == Tag.negWord)
+                            {
+                                paragraph.negWords--;
+                                paragraph.posWords++;
+                                bWord.tag = Tag.posWord;
+                            }
+                            if (bWord.tag == Tag.posWord)
+                            {
+                                paragraph.negWords++;
+                                paragraph.posWords--;
+                                bWord.tag = Tag.negWord;
+                            }
+                           
+                            bWord.tag = InvertTag(bWord.tag);
+                            sentence.words.Add(bWord); //Readd modified word.
+                        }
+
+                        //Update Word Counts
+                        paragraph.wordCount++;
                         if (aWord.tag == Tag.negWord)
                         {
-                            sentence.negWords++;
+                            paragraph.negWords++;
                         }
                         else if(aWord.tag == Tag.posWord)
                         {
-                            sentence.posWords++;
+                            paragraph.posWords++;
                         }
+
+                        sentence.words.Add(aWord);
+                        Console.WriteLine(aWord);//Debuging purposes
                     }
                 }
                 paragraph.sentences.Add(sentence);
@@ -66,7 +114,7 @@ namespace SentimentAnalyzer
             return paragraph;
         }
 
-        static TaggedWord TagWord(string text)
+        static TaggedWord TagWord(string text) //Tags a word based of Lexicon
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
@@ -79,8 +127,26 @@ namespace SentimentAnalyzer
             {
                 word.tag = Tag.posWord;
             }
-            //Need check here for negation and targets (targets should be based of product type and pulled specs)
+            else if (Lexicon.SearchNegation(text))
+            {
+                word.tag = Tag.negation;
+            }
+            //Need check here targets (targets should be based of product type and pulled specs)
             return word;
+        }
+
+        static Tag InvertTag(Tag tag) //Flip pos to neg or neg to pos (all else return no change)
+        {
+            if (tag == Tag.posWord)
+            {
+                return Tag.negWord;
+            }
+            else if (tag == Tag.negWord)
+            {
+                return Tag.posWord;
+            }
+
+            return tag;
         }
     }
     //Sentiment Data Structures
@@ -102,15 +168,13 @@ namespace SentimentAnalyzer
     struct Sentence
     {
         public List<TaggedWord> words;
-        public int wordCount;
-        public int posWords;
-        public int negWords;
+
     }
     struct Paragraph
     {
         public List<Sentence> sentences;
-        public int sentCount;
-        public int posSents;
-        public int negSents;
+        public int wordCount;
+        public int posWords;
+        public int negWords;
     }
 }

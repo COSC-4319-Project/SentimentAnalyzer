@@ -19,7 +19,21 @@ namespace SentimentAnalyzer
 
         private void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            Sentiment.Analyze(ReviewInputBox.Text);
+            int x = Sentiment.Analyze(ReviewInputBox.Text);
+            string text = "";
+            switch (x)
+            {
+                case -1:
+                    text = "Negative";
+                    break;
+                case 0:
+                    text = "Neutral";
+                    break;
+                case 1:
+                    text = "Positive";
+                    break;
+            }
+            ResultsText.Text = text;
         }
     }
 }

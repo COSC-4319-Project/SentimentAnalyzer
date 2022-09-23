@@ -14,10 +14,8 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {
-            Lexicon.negLexLoc = Application.StartupPath + Lexicon.negLexLoc; //Apend Lexicon Location
-            Lexicon.posLexLoc = Application.StartupPath + Lexicon.posLexLoc;
-
-            Lexicon.LoadLexicon();
+            
+            Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

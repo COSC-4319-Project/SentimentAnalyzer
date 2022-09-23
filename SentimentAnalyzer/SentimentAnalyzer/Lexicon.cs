@@ -13,16 +13,17 @@ namespace SentimentAnalyzer
     {
         public static string posLexLoc = "/Lexicon/positive-words.txt";
         public static string negLexLoc = "/Lexicon/negative-words.txt";
+        public static string negationLexLoc = "/Lexicon/negative-words.txt";
 
         public static List<string> posWords;
         public static List<string> negWords;
+        public static List<string> negationWords;
 
-        public static void LoadLexicon()
+        public static void LoadLexicon(string applicationPath)
         {
-            posWords = File.ReadAllLines(posLexLoc).ToList<string>(); ;
-            negWords = File.ReadAllLines(negLexLoc).ToList<string>();
-            foreach (string line in posWords)
-                Console.WriteLine(line);
+            posWords = File.ReadAllLines(applicationPath + posLexLoc).ToList<string>();
+            negWords = File.ReadAllLines(applicationPath + negLexLoc).ToList<string>();
+            negationWords = File.ReadAllLines(applicationPath + negationLexLoc).ToList<string>();
         }
 
         public static bool SearchPos(string word)
@@ -33,7 +34,11 @@ namespace SentimentAnalyzer
         public static bool SearchNeg(string word)
         {
             return negWords.Contains(word);
-
         }
+        public static bool SearchNegation(string word)
+        {
+            return negationWords.Contains(word);
+        }
+
     }
 }
