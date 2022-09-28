@@ -13,6 +13,30 @@ namespace SentimentAnalyzer
         public static char[] delemiterCharsSents = {'.','?','!'}; //Used to split senteces (Ending puntuation)
         public static char[] delemiterCharsWords = { ' ', ','};
 
+        public static float BatchAnalyze(List<string> paragraphs)
+        {
+            int totalParagraphs = 0;
+            int posParagraphs = 0;
+            int negParagraphs = 0;
+
+            foreach (string paragraph in paragraphs)
+            {
+                totalParagraphs++;
+                int tempVal = Analyze(paragraph);
+                if (tempVal == -1)
+                {
+                    negParagraphs++;
+                }
+                else if (tempVal == 1)
+                {
+                    posParagraphs++;
+                }
+            }
+
+            return (float)posParagraphs / (float)totalParagraphs;
+            
+        }
+
         public static int Analyze(string text, out float negPerc, out float neuPerc, out float posPerc) //Entry point for sentiment class
         {
             Paragraph paragraph = Tokenize(text);
