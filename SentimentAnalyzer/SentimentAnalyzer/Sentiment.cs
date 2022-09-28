@@ -33,7 +33,7 @@ namespace SentimentAnalyzer
                 }
             }
 
-            return (float)posParagraphs / (float)totalParagraphs;
+            return ((float)posParagraphs/(float)totalParagraphs - (float)negParagraphs / (float)totalParagraphs) * 5;
             
         }
 
