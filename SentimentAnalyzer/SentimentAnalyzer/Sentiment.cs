@@ -13,6 +13,8 @@ namespace SentimentAnalyzer
         public static char[] delemiterCharsSents = {'.','?','!'}; //Used to split senteces (Ending puntuation)
         public static char[] delemiterCharsWords = { ' ', ','};
 
+        const int negationSteps = 2; //Number of steps forward and backward.
+
         public static float BatchAnalyze(List<string> paragraphs)
         {
             int totalParagraphs = 0;
@@ -81,7 +83,7 @@ namespace SentimentAnalyzer
                 Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
-                bool negation = false; //Flag to negate next word
+                int negsteps = 0;
 
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
@@ -89,17 +91,25 @@ namespace SentimentAnalyzer
                     {
                         TaggedWord aWord = TagWord(word);
 
-                        if (negation) //Negate word
+                        if (negsteps > 0)
                         {
-                            negation = false;
+                            negsteps--;
                             aWord.tag = InvertTag(aWord.tag);
                         }
-                        if (aWord.tag == Tag.negation) //If negation flip previous and next words
+                        if (aWord.tag == Tag.negation) //If negation flip preceding and proceding words 
                         {
-                            negation = true; //Flag to negate next word
-                            //Remove last word flip tag and re insert
-                            TaggedWord bWord = sentence.words[sentence.words.Count - 1];
-                            sentence.words.RemoveAt(sentence.words.Count - 1);
+                            negsteps = negationSteps; //Counter to negate next x words
+                            //Remove last x words flip tag and re insert
+                            TaggedWord[] words = new TaggedWord[negationSteps];
+                            for (int i = 0; i < negationSteps; i++)
+                            { 
+                                words[i] = sentence.words[sentence.words.Count - 1];
+                                sentence.words.RemoveAt(sentence.words.Count - 1);
+                            }
+                            for (int i = negationSteps; i < 0; i--)
+                            { 
+                            
+                            }
                             if (bWord.tag == Tag.negWord)
                             {
                                 paragraph.negWords--;
