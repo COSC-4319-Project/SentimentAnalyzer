@@ -10,19 +10,26 @@ namespace SentimentAnalyzer
 {
     class Lexicon
     {
-        public static string posLexLoc = "/Lexicon/positive-words.txt";
-        public static string negLexLoc = "/Lexicon/negative-words.txt";
-        public static string negationLexLoc = "/Lexicon/negation-words.txt";
+        private static readonly string posLexLoc = "/Lexicon/positive-words.txt";
+        private static readonly string negLexLoc = "/Lexicon/negative-words.txt";
+        private static readonly string negationLexLoc = "/Lexicon/negation-words.txt";
+        private static readonly string contrastLexLoc = "/Lexicon/contrast-words.txt";
+        private static readonly string vaugeLexLoc = "/Lexicon/vauge-words.txt";
 
-        public static List<string> posWords;
-        public static List<string> negWords;
-        public static List<string> negationWords;
+
+        private static List<string> posWords;
+        private static List<string> negWords;
+        private static List<string> negationWords;
+        private static List<string> contrastWords;
+        private static List<string> vaugeWords;
+
 
         public static void LoadLexicon(string applicationPath)
         {
             posWords = File.ReadAllLines(applicationPath + posLexLoc).ToList<string>();
             negWords = File.ReadAllLines(applicationPath + negLexLoc).ToList<string>();
             negationWords = File.ReadAllLines(applicationPath + negationLexLoc).ToList<string>();
+            contrastWords = File.ReadAllLines(applicationPath + contrastLexLoc).ToList<string>();
         }
 
         public static bool SearchPos(string word)
@@ -38,6 +45,9 @@ namespace SentimentAnalyzer
         {
             return negationWords.Contains(word);
         }
-
+        public static bool SearchContrast(string word)
+        {
+            return contrastWords.Contains(word);
+        }
     }
 }

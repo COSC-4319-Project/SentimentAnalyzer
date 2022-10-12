@@ -70,77 +70,61 @@ namespace SentimentAnalyzer
         }
 
         //Idea is to break the sentence up into analyzable tagged chunks
-        static Paragraph Tokenize(string Text) //Overkill for now but Paragraph data structure will be nessesary for further work
-        {                               
+        static Paragraph Tokenize(string text)
+        {
+            text = text.ToLower(); //Set string data to lower case
             Paragraph paragraph = new Paragraph();
             paragraph.sentences = new List<Sentence>();
             Console.WriteLine("Pre Tokenize:");
-            Console.WriteLine(Text);
+            Console.WriteLine(text);
             Console.WriteLine("Tokenize:");
 
-            foreach (string sent in Text.Split(delemiterCharsSents)) //Split sentences
+            foreach (string sent in text.Split(delemiterCharsSents)) //Split sentences
             {
                 Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
-                int negsteps = 0;
-
+                //int negsteps = 0;//Counter to negate words procededing words
+                bool negate = false; //flag to swap rest of sentence.
+                int weight = 1; //weight of words in sentence
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
-                    if(word.Length > 0)
+                    if(word.Length <= 1) //Discard empty words
                     {
-                        TaggedWord aWord = TagWord(word);
-
-                        if (negsteps > 0)
-                        {
-                            negsteps--;
-                            aWord.tag = InvertTag(aWord.tag);
-                        }
-                        if (aWord.tag == Tag.negation) //If negation flip preceding and proceding words 
-                        {
-                            negsteps = negationSteps; //Counter to negate next x words
-                            //Remove last x words flip tag and re insert
-                            TaggedWord[] words = new TaggedWord[negationSteps];
-                            for (int i = 0; i < negationSteps; i++)
-                            { 
-                                words[i] = sentence.words[sentence.words.Count - 1];
-                                sentence.words.RemoveAt(sentence.words.Count - 1);
-                            }
-                            for (int i = negationSteps; i < 0; i--)
-                            { 
-                            
-                            }
-                            if (bWord.tag == Tag.negWord)
-                            {
-                                paragraph.negWords--;
-                                paragraph.posWords++;
-                                bWord.tag = Tag.posWord;
-                            }
-                            if (bWord.tag == Tag.posWord)
-                            {
-                                paragraph.negWords++;
-                                paragraph.posWords--;
-                                bWord.tag = Tag.negWord;
-                            }
-                           
-                            bWord.tag = InvertTag(bWord.tag);
-                            sentence.words.Add(bWord); //Readd modified word.
-                        }
-
-                        //Update Word Counts
-                        paragraph.wordCount++;
-                        if (aWord.tag == Tag.negWord)
-                        {
-                            paragraph.negWords++;
-                        }
-                        else if(aWord.tag == Tag.posWord)
-                        {
-                            paragraph.posWords++;
-                        }
-
-                        sentence.words.Add(aWord);
-                        Console.WriteLine(aWord);//Debuging purposes
+                        continue; //Skip to next item
                     }
+                    TaggedWord aWord = TagWord(word);
+
+                    //if (negsteps > 0)
+                    if (negate)
+                    {
+                        //negsteps--;
+                        aWord.tag = InvertTag(aWord.tag);
+                    }
+                    if (aWord.tag == Tag.negation) //If negation proceding words 
+                    {
+                        //negsteps = negationSteps; //set counter to negate next x words    
+                        negate = true;
+                    }
+
+                    //Contrast weight
+                    if (aWord.tag == Tag.contrast)
+                    {
+                        weight = 2;
+                    }
+                    //Update Word Counts
+                    paragraph.wordCount++;
+                    if (aWord.tag == Tag.negWord)
+                    {
+                        paragraph.negWords = paragraph.negWords + weight;
+                    }
+                    else if (aWord.tag == Tag.posWord)
+                    {
+                        paragraph.posWords = paragraph.posWords + weight;
+                    }
+
+                    sentence.words.Add(aWord); //add new word
+                    Console.WriteLine(aWord);//Debuging purposes
                 }
                 paragraph.sentences.Add(sentence);
             }
@@ -152,8 +136,16 @@ namespace SentimentAnalyzer
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
-
-            if (Lexicon.SearchNeg(text))
+            //Smallest Searches first
+            if (Lexicon.SearchContrast(text))
+            {
+                word.tag = Tag.contrast;
+            }
+            else if (Lexicon.SearchNegation(text))
+            {
+                word.tag = Tag.negation;
+            }
+            else if (Lexicon.SearchNeg(text))
             {
                 word.tag = Tag.negWord;
             }
@@ -161,19 +153,30 @@ namespace SentimentAnalyzer
             {
                 word.tag = Tag.posWord;
             }
-            else if (Lexicon.SearchNegation(text))
-            {
-                word.tag = Tag.negation;
-            }
             //Need check here targets (targets should be based of product type and pulled specs)
             return word;
         }
 
+        static void InvertTag(ref TaggedWord word, ref int posWords, ref int negwords)
+        {
+            if (word.tag == Tag.posWord)
+            {
+                posWords--;
+                negwords++;
+                word.tag = Tag.negWord;
+            }
+            else if (word.tag == Tag.negWord)
+            {
+                posWords--;
+                negwords++;
+                word.tag = Tag.posWord;
+            }
+        }
         static Tag InvertTag(Tag tag) //Flip pos to neg or neg to pos (all else return no change)
         {
             if (tag == Tag.posWord)
             {
-                return Tag.negWord;
+               return Tag.negWord;
             }
             else if (tag == Tag.negWord)
             {
@@ -187,7 +190,7 @@ namespace SentimentAnalyzer
     //Extra int fields are to allow detailed analysis later on.
     enum Tag //Used to tag words inside of a sentence
     { 
-        ignore, posWord, negWord, target, negation
+        ignore, posWord, negWord, target, negation, contrast
     }
     struct TaggedWord
     {
