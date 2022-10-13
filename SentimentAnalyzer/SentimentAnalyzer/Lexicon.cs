@@ -1,6 +1,4 @@
-﻿//Lexicon thanks to
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +8,13 @@ namespace SentimentAnalyzer
 {
     class Lexicon
     {
+        //Relative file locations
         private static readonly string posLexLoc = "/Lexicon/positive-words.txt";
         private static readonly string negLexLoc = "/Lexicon/negative-words.txt";
         private static readonly string negationLexLoc = "/Lexicon/negation-words.txt";
         private static readonly string contrastLexLoc = "/Lexicon/contrast-words.txt";
         private static readonly string vaugeLexLoc = "/Lexicon/vauge-words.txt";
-
+        //Lexicons
         private static List<string> posWords;
         private static List<string> negWords;
         private static List<string> negationWords;
@@ -23,7 +22,7 @@ namespace SentimentAnalyzer
         private static List<string> vaugeWords;
 
 
-        public static void LoadLexicon(string applicationPath)
+        public static void LoadLexicon(string applicationPath) //Initialization - Loads Lexicons into memory, application path passed from main.
         {
             posWords = File.ReadAllLines(applicationPath + posLexLoc).ToList<string>();
             negWords = File.ReadAllLines(applicationPath + negLexLoc).ToList<string>();
@@ -37,7 +36,6 @@ namespace SentimentAnalyzer
             return BinarySearch(posWords, word);
             //return posWords.Contains(word);
         }
-
         public static bool SearchNeg(string word)
         {
             return BinarySearch(negWords, word);
