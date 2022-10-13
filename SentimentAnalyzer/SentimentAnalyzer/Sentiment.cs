@@ -13,6 +13,8 @@ namespace SentimentAnalyzer
         public static char[] delemiterCharsSents = {'.','?','!'}; //Used to split senteces (Ending puntuation)
         public static char[] delemiterCharsWords = { ' ', ','};
 
+        const int negationSteps = 2; //Number of steps forward and backward.
+
         public static float BatchAnalyze(List<string> paragraphs)
         {
             int totalParagraphs = 0;
@@ -68,69 +70,76 @@ namespace SentimentAnalyzer
         }
 
         //Idea is to break the sentence up into analyzable tagged chunks
-        static Paragraph Tokenize(string Text) //Overkill for now but Paragraph data structure will be nessesary for further work
-        {                               
+        static Paragraph Tokenize(string text)
+        {
+            text = text.ToLower(); //Set string data to lower case
             Paragraph paragraph = new Paragraph();
             paragraph.sentences = new List<Sentence>();
             Console.WriteLine("Pre Tokenize:");
-            Console.WriteLine(Text);
+            Console.WriteLine(text);
             Console.WriteLine("Tokenize:");
 
-            foreach (string sent in Text.Split(delemiterCharsSents)) //Split sentences
+            foreach (string sent in text.Split(delemiterCharsSents)) //Split sentences
             {
                 Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
-                bool negation = false; //Flag to negate next word
+                bool negate = false; //flag to swap rest of sentence.
+                int weight = 1; //weight of words in sentence
+                Tag lastTag = Tag.ignore; //Last sentiment tag of sentence for vauge words.
 
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
-                    if(word.Length > 0)
+                    if(word.Length <= 1) //Discard empty words
                     {
-                        TaggedWord aWord = TagWord(word);
+                        continue; //Skip to next item
+                    }
 
-                        if (negation) //Negate word
+                    TaggedWord aWord = TagWord(word);
+                    paragraph.wordCount++;
+
+                    //if (negsteps > 0)
+                    if (negate)
+                    {
+                        //negsteps--;
+                        aWord.tag = InvertTag(aWord.tag);
+                    }
+                    if (aWord.tag == Tag.negation) //set flag tp negate proceding words 
+                    {
+                        negate = true;
+                    }
+                    else if (aWord.tag == Tag.contrast) //Contrast words doubles weight
+                    {
+                        weight = 2;
+                    }
+                    else if (aWord.tag == Tag.negWord)
+                    {
+                        paragraph.negWords = paragraph.negWords + weight;
+                        lastTag = Tag.negWord;
+                    }
+                    else if (aWord.tag == Tag.posWord)
+                    {
+                        paragraph.posWords = paragraph.posWords + weight;
+                        lastTag = Tag.posWord;
+                    }
+                    else if (aWord.tag == Tag.vauge)
+                    {
+                        if (lastTag != Tag.ignore) //Vauge words take on preceding sentiment
                         {
-                            negation = false;
-                            aWord.tag = InvertTag(aWord.tag);
-                        }
-                        if (aWord.tag == Tag.negation) //If negation flip previous and next words
-                        {
-                            negation = true; //Flag to negate next word
-                            //Remove last word flip tag and re insert
-                            TaggedWord bWord = sentence.words[sentence.words.Count - 1];
-                            sentence.words.RemoveAt(sentence.words.Count - 1);
-                            if (bWord.tag == Tag.negWord)
+                            paragraph.wordCount++;//Weight vauge words at half of weight of normal
+                            if (lastTag == Tag.posWord)
                             {
-                                paragraph.negWords--;
                                 paragraph.posWords++;
-                                bWord.tag = Tag.posWord;
                             }
-                            if (bWord.tag == Tag.posWord)
+                            else
                             {
                                 paragraph.negWords++;
-                                paragraph.posWords--;
-                                bWord.tag = Tag.negWord;
                             }
-                           
-                            bWord.tag = InvertTag(bWord.tag);
-                            sentence.words.Add(bWord); //Readd modified word.
                         }
-
-                        //Update Word Counts
-                        paragraph.wordCount++;
-                        if (aWord.tag == Tag.negWord)
-                        {
-                            paragraph.negWords++;
-                        }
-                        else if(aWord.tag == Tag.posWord)
-                        {
-                            paragraph.posWords++;
-                        }
-
-                        sentence.words.Add(aWord);
-                        Console.WriteLine(aWord);//Debuging purposes
                     }
+
+                    sentence.words.Add(aWord); //add new word
+                    Console.WriteLine(aWord);//Debuging purposes
                 }
                 paragraph.sentences.Add(sentence);
             }
@@ -142,8 +151,20 @@ namespace SentimentAnalyzer
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
-
-            if (Lexicon.SearchNeg(text))
+            //Smallest Searches first
+            if (Lexicon.SearchContrast(text))
+            {
+                word.tag = Tag.contrast;
+            }
+            else if (Lexicon.SearchVauge(text))
+            {
+                word.tag = Tag.vauge;
+            }
+            else if (Lexicon.SearchNegation(text))
+            {
+                word.tag = Tag.negation;
+            }
+            else if (Lexicon.SearchNeg(text))
             {
                 word.tag = Tag.negWord;
             }
@@ -151,19 +172,42 @@ namespace SentimentAnalyzer
             {
                 word.tag = Tag.posWord;
             }
-            else if (Lexicon.SearchNegation(text))
+            else
             {
-                word.tag = Tag.negation;
+                switch (Lexicon.SearchEmojis(text))
+                {
+                    case -1:
+                        word.tag = Tag.negWord;
+                        break;
+                    case 1:
+                        word.tag = Tag.posWord;
+                        break;
+                }
             }
-            //Need check here targets (targets should be based of product type and pulled specs)
+            //Need a check here for targets (targets should be based of product type and pulled specs)
             return word;
         }
 
+        static void InvertTag(ref TaggedWord word, ref int posWords, ref int negwords)
+        {
+            if (word.tag == Tag.posWord)
+            {
+                posWords--;
+                negwords++;
+                word.tag = Tag.negWord;
+            }
+            else if (word.tag == Tag.negWord)
+            {
+                posWords--;
+                negwords++;
+                word.tag = Tag.posWord;
+            }
+        } //Depriciated
         static Tag InvertTag(Tag tag) //Flip pos to neg or neg to pos (all else return no change)
         {
             if (tag == Tag.posWord)
             {
-                return Tag.negWord;
+               return Tag.negWord;
             }
             else if (tag == Tag.negWord)
             {
@@ -174,10 +218,9 @@ namespace SentimentAnalyzer
         }
     }
     //Sentiment Data Structures
-    //Extra int fields are to allow detailed analysis later on.
     enum Tag //Used to tag words inside of a sentence
     { 
-        ignore, posWord, negWord, target, negation
+        ignore, posWord, negWord, target, negation, contrast, vauge
     }
     struct TaggedWord
     {
