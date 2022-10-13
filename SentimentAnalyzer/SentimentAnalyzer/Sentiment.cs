@@ -84,16 +84,19 @@ namespace SentimentAnalyzer
                 Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
-                //int negsteps = 0;//Counter to negate words procededing words
                 bool negate = false; //flag to swap rest of sentence.
                 int weight = 1; //weight of words in sentence
+                Tag lastTag = Tag.ignore; //Last sentiment tag of sentence for vauge words.
+
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
                     if(word.Length <= 1) //Discard empty words
                     {
                         continue; //Skip to next item
                     }
+
                     TaggedWord aWord = TagWord(word);
+                    paragraph.wordCount++;
 
                     //if (negsteps > 0)
                     if (negate)
@@ -101,26 +104,38 @@ namespace SentimentAnalyzer
                         //negsteps--;
                         aWord.tag = InvertTag(aWord.tag);
                     }
-                    if (aWord.tag == Tag.negation) //If negation proceding words 
+                    if (aWord.tag == Tag.negation) //set flag tp negate proceding words 
                     {
-                        //negsteps = negationSteps; //set counter to negate next x words    
                         negate = true;
                     }
-
-                    //Contrast weight
-                    if (aWord.tag == Tag.contrast)
+                    else if (aWord.tag == Tag.contrast) //Contrast words doubles weight
                     {
                         weight = 2;
                     }
-                    //Update Word Counts
-                    paragraph.wordCount++;
-                    if (aWord.tag == Tag.negWord)
+                    else if (aWord.tag == Tag.negWord)
                     {
                         paragraph.negWords = paragraph.negWords + weight;
+                        lastTag = Tag.negWord;
                     }
                     else if (aWord.tag == Tag.posWord)
                     {
                         paragraph.posWords = paragraph.posWords + weight;
+                        lastTag = Tag.posWord;
+                    }
+                    else if (aWord.tag == Tag.vauge)
+                    {
+                        if (lastTag != Tag.ignore) //Vauge words take on preceding sentiment
+                        {
+                            paragraph.wordCount++;//Weight vauge words at half of weight of normal
+                            if (lastTag == Tag.posWord)
+                            {
+                                paragraph.posWords++;
+                            }
+                            else
+                            {
+                                paragraph.negWords++;
+                            }
+                        }
                     }
 
                     sentence.words.Add(aWord); //add new word
@@ -141,6 +156,10 @@ namespace SentimentAnalyzer
             {
                 word.tag = Tag.contrast;
             }
+            else if (Lexicon.SearchVauge(text))
+            {
+                word.tag = Tag.vauge;
+            }
             else if (Lexicon.SearchNegation(text))
             {
                 word.tag = Tag.negation;
@@ -153,7 +172,19 @@ namespace SentimentAnalyzer
             {
                 word.tag = Tag.posWord;
             }
-            //Need check here targets (targets should be based of product type and pulled specs)
+            else
+            {
+                switch (Lexicon.SearchEmojis(text))
+                {
+                    case -1:
+                        word.tag = Tag.negWord;
+                        break;
+                    case 1:
+                        word.tag = Tag.posWord;
+                        break;
+                }
+            }
+            //Need a check here for targets (targets should be based of product type and pulled specs)
             return word;
         }
 
@@ -171,7 +202,7 @@ namespace SentimentAnalyzer
                 negwords++;
                 word.tag = Tag.posWord;
             }
-        }
+        } //Depriciated
         static Tag InvertTag(Tag tag) //Flip pos to neg or neg to pos (all else return no change)
         {
             if (tag == Tag.posWord)
@@ -187,10 +218,9 @@ namespace SentimentAnalyzer
         }
     }
     //Sentiment Data Structures
-    //Extra int fields are to allow detailed analysis later on.
     enum Tag //Used to tag words inside of a sentence
     { 
-        ignore, posWord, negWord, target, negation, contrast
+        ignore, posWord, negWord, target, negation, contrast, vauge
     }
     struct TaggedWord
     {
