@@ -19,6 +19,7 @@ namespace SentimentAnalyzer
 
         private void AnalyzeButton_Click(object sender, EventArgs e)
         {
+            DateTime startTime = DateTime.Now;
             int x = Sentiment.Analyze(ReviewInputBox.Text);
             string text = "";
             switch (x)
@@ -34,6 +35,7 @@ namespace SentimentAnalyzer
                     break;
             }
             ResultsText.Text = text;
+            Console.WriteLine("Analysis complete took: " + (startTime - DateTime.Now));
         }
     }
 }
