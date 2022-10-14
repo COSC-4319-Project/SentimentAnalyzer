@@ -8,17 +8,25 @@ namespace SentimentAnalyzer
 {
     static class Program
     {
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            
-            Lexicon.LoadLexicon(Application.StartupPath);
+            Login.LoadUserDB(Application.StartupPath);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            Application.Run(new LoginForm());
+
+            if (Login.loggedin)
+            { 
+                Application.Run(new Form1());
+
+            }
         }
     }
 }

@@ -1,0 +1,1 @@
+Copy Lexicon Folder to same folder as built exe
