@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Tilly Dewing Fall 2022
+//Software Engineering 4319
+//positive and negative word lexicons by Hu and Liu, KDD-2004, https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

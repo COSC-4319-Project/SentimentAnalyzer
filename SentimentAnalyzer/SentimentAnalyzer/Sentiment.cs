@@ -1,5 +1,7 @@
-﻿//Tilly Dewing COSC 4319 Spring 2022
+﻿//Tilly Dewing Fall 2022
+//Software Engineering 4319
 //Based of research and lexicon by Hu and Liu, KDD-2004, https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
