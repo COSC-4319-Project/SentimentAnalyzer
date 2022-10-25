@@ -13,7 +13,7 @@ namespace SentimentAnalyzer
     class Sentiment //Used to try and determine the sentiment of a piece of english text
     {
         public static char[] delemiterCharsSents = {'.','?','!'}; //Used to split senteces (Ending puntuation)
-        public static char[] delemiterCharsWords = { ' ', ','};
+        public static char[] delemiterCharsWords = { ' ', ',', ';'};
 
         const int negationSteps = 2; //Number of steps forward and backward.
 
@@ -140,6 +140,14 @@ namespace SentimentAnalyzer
                         }
                     }
 
+                    if (weight > 1 && lastTag != Tag.ignore) //if we hit a contrast word and have proceding sentiment.
+                    {
+                        if (aWord.tag == Tag.posWord || aWord.tag == Tag.negWord) //Sentiment words should take oposite of proceding sentiment after contrast.
+                        {
+                            aWord.tag = InvertTag(lastTag);
+                        }
+                    }
+
                     sentence.words.Add(aWord); //add new word
                     Console.WriteLine(aWord);//Debuging purposes
                 }
@@ -149,7 +157,7 @@ namespace SentimentAnalyzer
             return paragraph;
         }
 
-        static TaggedWord TagWord(string text) //Tags a word based of Lexicon
+        static TaggedWord TagWord(string text) //Tags a word based of Lexicons
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
@@ -186,6 +194,12 @@ namespace SentimentAnalyzer
                         break;
                 }
             }
+
+            if (word.tag == Tag.ignore)//Finally check to parse unrecognized strings of emojiis
+            {
+                word = TryParseEmojiiString(text);
+            }
+
             //Need a check here for targets (targets should be based of product type and pulled specs)
             return word;
         }
@@ -217,6 +231,27 @@ namespace SentimentAnalyzer
             }
 
             return tag;
+        }
+
+        static TaggedWord TryParseEmojiiString(string text)
+        {
+            TaggedWord word = new TaggedWord();
+            word.word = text;
+
+            foreach (char character in text)
+            {
+                switch (Lexicon.SearchEmojis(character.ToString()))
+                {
+                    case -1:
+                        word.tag = Tag.negWord;
+                        break;
+                    case 1:
+                        word.tag = Tag.posWord;
+                        break;
+                }
+            }
+
+            return word;
         }
     }
     //Sentiment Data Structures

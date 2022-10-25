@@ -19,7 +19,7 @@ namespace SentimentAnalyzer
         static void Main()
         {
             Login.LoadUserDB(Application.StartupPath);
-
+            Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -27,9 +27,19 @@ namespace SentimentAnalyzer
 
             if (Login.loggedin)
             { 
-                Application.Run(new Form1());
-
+                Application.Run(new SelectionForm());
             }
+        }
+
+        public static void RunBatch(Form calledFrom)
+        {
+            calledFrom.Close();
+            Application.Run(new BatchReviewDisplay());
+        }
+        public static void RunSingle(Form calledFrom)
+        {
+            calledFrom.Close();
+            Application.Run(new Form1());
         }
     }
 }
