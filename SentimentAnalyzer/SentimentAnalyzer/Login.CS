@@ -68,6 +68,11 @@ namespace SentimentAnalyzer
             return false; //invalid user
         }
 
+        public static void GuestLogin() //Guest login, ID = -1 means offline.
+        {
+            loggedin = true;
+            currentUser = new User("Guest", "", -1);
+        }
         public static string SaltedHash(string plainText)
         {
             //Create a salt

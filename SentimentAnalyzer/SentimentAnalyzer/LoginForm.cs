@@ -12,6 +12,7 @@ namespace SentimentAnalyzer
 {
     public partial class LoginForm : Form
     {
+        public bool isGuest;
         public LoginForm()
         {
             InitializeComponent();
@@ -44,6 +45,23 @@ namespace SentimentAnalyzer
                 {
                     resultLabel.Text = "ERR: User Exists";
                 }
+            }
+        }
+
+        private void guestCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            PasswordBox.Enabled = !guestCheckBox.Checked;
+            UsernameBox.Enabled = !guestCheckBox.Checked;
+            createAcctButt.Enabled = !guestCheckBox.Checked;
+
+            if (guestCheckBox.Checked)
+            {
+                UsernameBox.Text = "Guest";
+            }
+            else
+            { 
+                UsernameBox.Text = "";
+
             }
         }
     }

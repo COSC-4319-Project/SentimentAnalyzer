@@ -79,6 +79,7 @@
       <DependentUpon>SelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sentiment.cs" />
+    <Compile Include="ServerClient.cs" />
     <EmbeddedResource Include="BatchReviewDisplay.resx">
       <DependentUpon>BatchReviewDisplay.cs</DependentUpon>
     </EmbeddedResource>

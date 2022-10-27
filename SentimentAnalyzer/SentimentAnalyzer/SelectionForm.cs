@@ -12,6 +12,10 @@ namespace SentimentAnalyzer
 {
     public partial class SelectionForm : Form
     {
+        //Forms
+        Form1 form1 = new Form1();
+        BatchReviewDisplay reviewDisplay = new BatchReviewDisplay();
+
         public SelectionForm()
         {
             InitializeComponent();
@@ -19,19 +23,17 @@ namespace SentimentAnalyzer
 
         private void singleReviewButton_Click(object sender, EventArgs e)
         {
-            Close();
-            Application.Run(new Form1());
+            reviewDisplay.ShowDialog();
         }
 
         private void batchButton_Click(object sender, EventArgs e)
         {
-            Close();
-            Application.Run(new BatchReviewDisplay());
+            form1.ShowDialog();
         }
 
         private void historyButton_Click(object sender, EventArgs e)
         {
-
+            //Show History UI
         }
     }
 }
