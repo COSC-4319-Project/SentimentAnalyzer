@@ -18,6 +18,10 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {
+            Console.WriteLine("Connecting:");
+            ServerClient.InitializeClient();
+            Console.WriteLine("Connected:");
+
             Login.LoadUserDB(Application.StartupPath);
             Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
