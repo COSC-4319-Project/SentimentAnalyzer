@@ -23,12 +23,13 @@ namespace SentimentAnalyzer
 
         private void singleReviewButton_Click(object sender, EventArgs e)
         {
-            reviewDisplay.ShowDialog();
+            form1.ShowDialog();
         }
 
         private void batchButton_Click(object sender, EventArgs e)
         {
-            form1.ShowDialog();
+            reviewDisplay.ShowDialog();
+
         }
 
         private void historyButton_Click(object sender, EventArgs e)
