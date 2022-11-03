@@ -16,9 +16,33 @@ namespace SentimentAnalyzer
         private static NetworkStream msgStream = null;
         private static TcpClient tcpClient;
 
+        private static User currentUser;
+        public static bool loggedin = false;
+
         public static void InitializeClient()
         {
             tcpClient = new TcpClient();
+        }
+        private static bool Connect()
+        {
+            Console.WriteLine("Connecting to: " + serverIP + ":" + port);
+            try //Try catch to handle when client is unable to connect
+            {
+                tcpClient.Connect(serverIP, port);
+                Console.WriteLine("Connected");
+                return true;
+            }
+            catch (SocketException)
+            {
+                Console.WriteLine("[ERROR]Connection Failed");
+                return false;
+            }
+        }
+        
+        public static void GuestLogin() //Guest login, ID = -1 means offline.
+        {
+            loggedin = true;
+            currentUser = new User("Guest", "", -1, "guest");
         }
 
         public static void TestClient()
@@ -50,19 +74,67 @@ namespace SentimentAnalyzer
             return ver;
 
         }
-        private static bool Connect()
+
+        public static bool AttemptLogin(string username, string password)
         {
-            Console.WriteLine("Connecting to: " + serverIP + ":" + port);
-            try //Try catch to handle when client is unable to connect
+            Connect();
+            SendMessage("LGN|" + username + "|" + password);
+            string response = ReciveMessage();
+            string[] splitRes = response.Split('|');
+
+            if (splitRes.Length > 1) //valid response
             {
-                tcpClient.Connect(serverIP, port);
-                Console.WriteLine("Connected");
+                currentUser = new User(username, password, int.Parse(splitRes[0]), splitRes[1]);
+                loggedin = true;
                 return true;
             }
-            catch (SocketException exception)
+            else
             {
-                Console.WriteLine("[ERROR]Connection Failed");
                 return false;
+            }
+        }
+
+        public static bool CreateAccount(string username, string password, string name)
+        { 
+            Connect();
+            SendMessage(string.Format("ACT|{0}|{1}|{2}", username, password, name));
+            if (ReciveMessage() == "VALID")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool UpdateAccount(string username, string oldPassowrd, string newPassword)
+        {
+            Connect();
+            SendMessage(string.Format("UAP|{0}|{1}|{2}", username, oldPassowrd, newPassword));
+            if (ReciveMessage() == "VALID")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static HistoryRec RequestHistory(string asinID)
+        {
+            Connect();
+            SendMessage(string.Format("HIS|{0}", asinID));
+            string[] splitRes = ReciveMessage().Split('|');
+
+            if (splitRes.Length > 1) //if valid response
+            {
+                return new HistoryRec(splitRes);
+            }
+            else
+            {
+                return new HistoryRec(-1);
             }
         }
 
@@ -97,4 +169,73 @@ namespace SentimentAnalyzer
             return ReciveMessageUTF8(2048);
         }
     }
+    struct User
+    {
+        public string userName;
+        public string password;
+        public string name;
+        public int userID;
+
+        public User(string userName, string password, int userID)
+        {
+            this.userName = userName;
+            this.password = password;
+            this.userID = userID;
+            this.name = "name";
+        }
+        public User(string userName, string password, int userID, string name)
+        {
+            this.userName = userName;
+            this.password = password;
+            this.userID = userID;
+            this.name = name;
+        }
+    }
+    struct HistoryRec
+    {
+        public string asinID;
+        public int sentimentVal;
+        public int numRev;
+        public int numNeg;
+        public int numPos;
+        public float confidence;
+        public float adjustedRating;
+        public int uID;
+        public DateTime dateAnalyzed;
+
+        public HistoryRec(string asinID, int sentimentVal, int numRev, int numPos, int numNeg, float confidence, float adjustedRating, int uID, DateTime dateAnalyzed)
+        {
+            this.asinID = asinID;
+            this.sentimentVal = sentimentVal;
+            this.numRev = numRev;
+            this.numPos = numPos;
+            this.numNeg = numNeg;
+            this.confidence = confidence;
+            this.adjustedRating = adjustedRating;
+            this.uID = uID;
+            this.dateAnalyzed = dateAnalyzed;
+        }
+
+        public HistoryRec(string[] message) //Parse response from server into record
+        {
+            asinID = message[0];
+            uID = int.Parse(message[1]);
+            adjustedRating = float.Parse(message[2]);
+            sentimentVal = int.Parse(message[3]);
+            numRev = int.Parse(message[4]);
+            numPos = int.Parse(message[5]);
+            numNeg = int.Parse(message[6]);
+            confidence = float.Parse(message[7]);
+            dateAnalyzed = DateTime.Parse(message[8]);
+        }
+
+        public HistoryRec(int val) //Used for empty record.
+        {
+            uID = sentimentVal = numNeg = numPos = numRev = val;
+            confidence = adjustedRating = (float) val;
+            asinID = val.ToString();
+            dateAnalyzed = DateTime.Now;
+        }
+    }
+
 }

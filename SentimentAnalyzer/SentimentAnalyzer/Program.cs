@@ -22,14 +22,14 @@ namespace SentimentAnalyzer
             ServerClient.InitializeClient();
             Console.WriteLine("Connected:");
 
-            Login.LoadUserDB(Application.StartupPath);
+            //Login.LoadUserDB(Application.StartupPath);
             Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(new LoginForm());
 
-            if (Login.loggedin)
+            if (ServerClient.loggedin)
             { 
                 Application.Run(new SelectionForm());
             }

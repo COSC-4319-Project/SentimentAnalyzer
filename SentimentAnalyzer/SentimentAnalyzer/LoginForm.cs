@@ -22,7 +22,7 @@ namespace SentimentAnalyzer
         {
             if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
             {
-                if (Login.AttemptLogin(UsernameBox.Text, PasswordBox.Text))
+                if (ServerClient.AttemptLogin(UsernameBox.Text, PasswordBox.Text))
                 {
                     Close();
                 }
@@ -37,7 +37,7 @@ namespace SentimentAnalyzer
         {
             if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
             {
-                if (Login.CreateAccount(UsernameBox.Text, PasswordBox.Text))
+                if (ServerClient.CreateAccount(UsernameBox.Text, PasswordBox.Text, "Name"))
                 {
                     Close();
                 }
