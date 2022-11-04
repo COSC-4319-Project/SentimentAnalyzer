@@ -81,6 +81,7 @@ namespace SentimentAnalyzer
             SendMessage("LGN|" + username + "|" + password);
             string response = ReciveMessage();
             string[] splitRes = response.Split('|');
+            tcpClient.Close();
 
             if (splitRes.Length > 1) //valid response
             {
@@ -92,18 +93,23 @@ namespace SentimentAnalyzer
             {
                 return false;
             }
+
         }
 
         public static bool CreateAccount(string username, string password, string name)
         { 
             Connect();
             SendMessage(string.Format("ACT|{0}|{1}|{2}", username, password, name));
+            
+
             if (ReciveMessage() == "VALID")
             {
+                tcpClient.Close();
                 return true;
             }
             else
             {
+                tcpClient.Close();
                 return false;
             }
         }
@@ -112,6 +118,8 @@ namespace SentimentAnalyzer
         {
             Connect();
             SendMessage(string.Format("UAP|{0}|{1}|{2}", username, oldPassowrd, newPassword));
+            tcpClient.Close();
+
             if (ReciveMessage() == "VALID")
             {
                 return true;
@@ -126,6 +134,8 @@ namespace SentimentAnalyzer
         {
             Connect();
             SendMessage(string.Format("HIS|{0}", asinID));
+            tcpClient.Close();
+
             string[] splitRes = ReciveMessage().Split('|');
 
             if (splitRes.Length > 1) //if valid response
