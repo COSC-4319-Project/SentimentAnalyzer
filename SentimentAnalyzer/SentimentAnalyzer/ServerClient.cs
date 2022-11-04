@@ -18,7 +18,7 @@ namespace SentimentAnalyzer
 
         private static User currentUser;
         public static bool loggedin = false;
-
+        public static bool offlineMode = false;
         public static void InitializeClient()
         {
             tcpClient = new TcpClient();
@@ -41,21 +41,11 @@ namespace SentimentAnalyzer
         
         public static void GuestLogin() //Guest login, ID = -1 means offline.
         {
-            loggedin = true;
+            loggedin = offlineMode = true;
             currentUser = new User("Guest", "", -1, "guest");
         }
 
-        public static void TestClient()
-        {
-            Connect();
-            SendMessage("LEX|REQ|0");
-            int length = int.Parse(ReciveMessage()); //Get length of lexicon
-            Console.WriteLine(length);
-            string lex = ReciveMessage(length);
-            Console.WriteLine(lex);
-            tcpClient.Close();
-        }
-        public static string GetLexicon(int lexNum)
+        public static List<string> GetLexicon(int lexNum)
         {
             Connect();
             SendMessage("LEX|REQ|" + lexNum);
@@ -63,9 +53,11 @@ namespace SentimentAnalyzer
             Console.WriteLine(length);
             string lex = ReciveMessage(length);
             tcpClient.Close();
-            return lex;
+            
+            return new List<string>(Utilites.SplitToLines(lex));
         }
-        public static int GetLexiconVersiom(int lexNum)
+
+        public static int GetLexiconVersion(int lexNum)
         { 
             Connect();
             SendMessage("LEX|VER|" + lexNum);
@@ -179,7 +171,7 @@ namespace SentimentAnalyzer
             return ReciveMessageUTF8(2048);
         }
     }
-    struct User
+    public struct User
     {
         public string userName;
         public string password;
@@ -201,10 +193,10 @@ namespace SentimentAnalyzer
             this.name = name;
         }
     }
-    struct HistoryRec
+    public struct HistoryRec
     {
         public string asinID;
-        public int sentimentVal;
+        public string prodName;
         public int numRev;
         public int numNeg;
         public int numPos;
@@ -213,10 +205,9 @@ namespace SentimentAnalyzer
         public int uID;
         public DateTime dateAnalyzed;
 
-        public HistoryRec(string asinID, int sentimentVal, int numRev, int numPos, int numNeg, float confidence, float adjustedRating, int uID, DateTime dateAnalyzed)
+        public HistoryRec(string asinID, string prodName, int numRev, int numPos, int numNeg, float confidence, float adjustedRating, int uID, DateTime dateAnalyzed)
         {
             this.asinID = asinID;
-            this.sentimentVal = sentimentVal;
             this.numRev = numRev;
             this.numPos = numPos;
             this.numNeg = numNeg;
@@ -224,6 +215,7 @@ namespace SentimentAnalyzer
             this.adjustedRating = adjustedRating;
             this.uID = uID;
             this.dateAnalyzed = dateAnalyzed;
+            this.prodName = prodName;
         }
 
         public HistoryRec(string[] message) //Parse response from server into record
@@ -231,7 +223,7 @@ namespace SentimentAnalyzer
             asinID = message[0];
             uID = int.Parse(message[1]);
             adjustedRating = float.Parse(message[2]);
-            sentimentVal = int.Parse(message[3]);
+            prodName = message[3];
             numRev = int.Parse(message[4]);
             numPos = int.Parse(message[5]);
             numNeg = int.Parse(message[6]);
@@ -241,10 +233,11 @@ namespace SentimentAnalyzer
 
         public HistoryRec(int val) //Used for empty record.
         {
-            uID = sentimentVal = numNeg = numPos = numRev = val;
+            uID = numNeg = numPos = numRev = val;
             confidence = adjustedRating = (float) val;
             asinID = val.ToString();
             dateAnalyzed = DateTime.Now;
+            prodName = "EMPTY";
         }
     }
 

@@ -16,5 +16,17 @@ namespace SentimentAnalyzer
         {
             InitializeComponent();
         }
+
+        public BatchReviewDisplay(HistoryRec rec)
+        {
+            InitializeComponent();
+            
+        }
+
+        private void analyzeButton_Click(object sender, EventArgs e)
+        {
+            string url = textBox1.Text; //URL from input box
+            //Scrapper Connection
+        }
     }
 }

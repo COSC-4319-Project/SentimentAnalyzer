@@ -224,6 +224,7 @@
             this.analyzeButton.TabIndex = 6;
             this.analyzeButton.Text = "Analyze";
             this.analyzeButton.UseVisualStyleBackColor = true;
+            this.analyzeButton.Click += new System.EventHandler(this.analyzeButton_Click);
             // 
             // BatchReviewDisplay
             // 

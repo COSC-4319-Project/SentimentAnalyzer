@@ -61,6 +61,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HistoryListDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryListDisplay.Designer.cs">
+      <DependentUpon>HistoryListDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lexicon.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -79,11 +85,15 @@
     </Compile>
     <Compile Include="Sentiment.cs" />
     <Compile Include="ServerClient.cs" />
+    <Compile Include="Utilites.cs" />
     <EmbeddedResource Include="BatchReviewDisplay.resx">
       <DependentUpon>BatchReviewDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryListDisplay.resx">
+      <DependentUpon>HistoryListDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
