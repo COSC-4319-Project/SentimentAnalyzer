@@ -26,7 +26,13 @@ namespace SentimentAnalyzer
         private void analyzeButton_Click(object sender, EventArgs e)
         {
             string url = textBox1.Text; //URL from input box
-            //Scrapper Connection
+            Console.WriteLine(Utilites.CheckValidAmazonURL(url));
+            if (!Utilites.CheckValidAmazonURL(url))
+            {
+                return;
+            }
+
+            //Scrapper Connection here
         }
     }
 }

@@ -26,8 +26,10 @@ namespace SentimentAnalyzer
         private static bool Connect()
         {
             Console.WriteLine("Connecting to: " + serverIP + ":" + port);
+
             try //Try catch to handle when client is unable to connect
             {
+                InitializeClient();
                 tcpClient.Connect(serverIP, port);
                 Console.WriteLine("Connected");
                 return true;
@@ -125,7 +127,7 @@ namespace SentimentAnalyzer
         public static HistoryRec RequestHistory(string asinID)
         {
             Connect();
-            SendMessage(string.Format("HIS|{0}", asinID));
+            SendMessage(string.Format("HIS|SNG|{0}", asinID));
             tcpClient.Close();
 
             string[] splitRes = ReciveMessage().Split('|');

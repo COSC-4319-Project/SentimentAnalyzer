@@ -34,7 +34,7 @@ namespace SentimentAnalyzer
 
         private void historyButton_Click(object sender, EventArgs e)
         {
-            //Show History UI
+            historyDisplay.ShowDialog();
         }
     }
 }

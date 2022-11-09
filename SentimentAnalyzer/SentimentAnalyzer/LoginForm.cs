@@ -20,7 +20,12 @@ namespace SentimentAnalyzer
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
+            if (guestCheckBox.Checked)
+            {
+                ServerClient.GuestLogin();
+                Close();
+            }
+            else if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
             {
                 if (ServerClient.AttemptLogin(UsernameBox.Text, PasswordBox.Text))
                 {

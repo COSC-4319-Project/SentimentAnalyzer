@@ -25,5 +25,18 @@ namespace SentimentAnalyzer
                 }
             }
         }
+
+        public static bool CheckValidAmazonURL(string url)
+        {
+            //Example URL: https://www.amazon.com/Liberty-Imports-Jumbo-Rubber-Duck/dp/B00ODBPB1U/
+            string[] splitURL = url.Split('/');
+            bool result = true;
+            if ((splitURL.Length < 5) || (splitURL[2] != "www.amazon.com") || (splitURL[4] != "dp") || (splitURL[5].Length != 10))
+            {
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

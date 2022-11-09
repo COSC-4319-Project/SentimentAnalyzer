@@ -24,7 +24,7 @@ namespace SentimentAnalyzer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new HistoryListDisplay());
+            Application.Run(new LoginForm());
 
             if (ServerClient.loggedin)
             {
