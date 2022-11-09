@@ -28,6 +28,8 @@ namespace SentimentAnalyzer
         private static List<string> vaugeWords;
         private static List<emojiEntry> emojiList;
 
+        //Version array
+        private static int[] lexVersions = new int[6];
         public static void LoadLexicon(string applicationPath) //Initialization - Loads Lexicons into memory, application path passed from main.
         {
             posWords = File.ReadAllLines(applicationPath + posLexLoc).ToList<string>();
@@ -36,6 +38,8 @@ namespace SentimentAnalyzer
             contrastWords = File.ReadAllLines(applicationPath + contrastLexLoc).ToList<string>();
             vaugeWords = File.ReadAllLines(applicationPath + vaugeLexLoc).ToList<string>();
             LoadEmojiLexicon(applicationPath);
+
+            GetLexiconVersions();
         }
         public static bool SearchPos(string word)
         {
@@ -91,10 +95,23 @@ namespace SentimentAnalyzer
         {
             List<string> lines = File.ReadAllLines(applicationPath + emojiLexLoc).ToList<string>();
             emojiList = new List<emojiEntry>();
+            ParseEmojiLex(lines);
+        }
+
+        public static void ParseEmojiLex(List<string> lines)
+        {
+            emojiList.Clear();
             foreach (string line in lines)
             {
                 string[] split = line.Split('#');
-                emojiList.Add(new emojiEntry(split[0], int.Parse(split[1])));
+                if (split.Length == 1) //Version Number
+                {
+                    lexVersions[5] = int.Parse(line);
+                }
+                else
+                {
+                    emojiList.Add(new emojiEntry(split[0], int.Parse(split[1])));
+                }
             }
         }
         
@@ -108,6 +125,49 @@ namespace SentimentAnalyzer
                 }
             }
             return 0; //Not Found
+        }
+
+        public static void UpdateLexiconsFromServer()
+        {
+            if (ServerClient.offlineMode)
+            {
+                return;
+            }
+
+            if (ServerClient.GetLexiconVersion(0) > lexVersions[0])
+            {
+                posWords = ServerClient.GetLexicon(0);
+            }
+
+            if (ServerClient.GetLexiconVersion(1) > lexVersions[1])
+            {
+                posWords = ServerClient.GetLexicon(0);
+            }
+            if (ServerClient.GetLexiconVersion(2) > lexVersions[2])
+            {
+                posWords = ServerClient.GetLexicon(0);
+            }
+            if (ServerClient.GetLexiconVersion(3) > lexVersions[3])
+            {
+                posWords = ServerClient.GetLexicon(0);
+            }
+            if (ServerClient.GetLexiconVersion(4) > lexVersions[4])
+            {
+                posWords = ServerClient.GetLexicon(0);
+            }
+            if (ServerClient.GetLexiconVersion(5) > lexVersions[5])
+            {
+                ParseEmojiLex(ServerClient.GetLexicon(0));
+            }
+        }
+
+        private static void GetLexiconVersions()
+        {
+            lexVersions[0] = int.Parse(posWords[0]);
+            lexVersions[1] = int.Parse(negWords[0]);
+            lexVersions[2] = int.Parse(negationWords[0]);
+            lexVersions[3] = int.Parse(contrastWords[0]);
+            lexVersions[4] = int.Parse(vaugeWords[0]);
         }
     }
     struct emojiEntry

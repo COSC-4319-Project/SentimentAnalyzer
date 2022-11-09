@@ -1,5 +1,4 @@
-﻿//Tilly Dewing Fall 2022
-//Software Engineering 4319
+﻿//Software Engineering 4319 - Fall 2022
 
 using System;
 using System.Collections.Generic;
@@ -18,15 +17,18 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {
-            Login.LoadUserDB(Application.StartupPath);
+            ServerClient.InitializeClient();
+            
+            //Login.LoadUserDB(Application.StartupPath);
             Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(new LoginForm());
 
-            if (Login.loggedin)
-            { 
+            if (ServerClient.loggedin)
+            {
+                Lexicon.UpdateLexiconsFromServer();
                 Application.Run(new SelectionForm());
             }
         }
