@@ -15,7 +15,7 @@ namespace SentimentAnalyzer
         //Forms
         Form1 form1 = new Form1();
         BatchReviewDisplay reviewDisplay = new BatchReviewDisplay();
-
+        HistoryListDisplay historyDisplay = new HistoryListDisplay();
         public SelectionForm()
         {
             InitializeComponent();

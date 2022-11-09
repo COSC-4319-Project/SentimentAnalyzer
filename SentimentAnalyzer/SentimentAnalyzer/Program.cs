@@ -1,5 +1,4 @@
-﻿//Tilly Dewing Fall 2022
-//Software Engineering 4319
+﻿//Software Engineering 4319 - Fall 2022
 
 using System;
 using System.Collections.Generic;

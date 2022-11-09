@@ -58,7 +58,7 @@ namespace SentimentAnalyzer
         }
 
         public static int GetLexiconVersion(int lexNum)
-        { 
+        {
             Connect();
             SendMessage("LEX|VER|" + lexNum);
             int ver = int.Parse(ReciveMessage()); //Get length of lexicon
@@ -138,6 +138,19 @@ namespace SentimentAnalyzer
             {
                 return new HistoryRec(-1);
             }
+        }
+        
+        public static HistoryRec[] GetUserHistory() //Temporary
+        {
+            
+            HistoryRec[] records = new HistoryRec[1];
+
+            if (offlineMode)
+            {
+                return null;
+            }
+
+            return records;
         }
 
         static void SendMessage(string message)

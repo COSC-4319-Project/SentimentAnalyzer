@@ -44,8 +44,16 @@ namespace SentimentAnalyzer
             ListViewItem item = new ListViewItem(new string[] { rec.prodName, rec.adjustedRating.ToString(), rec.dateAnalyzed.ToString() });
             listView1.Items.Add(item);
         }
-
-        private void listView1_MouseDoubleClick(object sender, EventArgs e)
+        public void GetHistoryItems(int uID)
+        {
+            listView1.Items.Clear(); //Empty current list
+            foreach (HistoryRec rec in ServerClient.GetUserHistory())
+            {
+                ListViewItem item = new ListViewItem(new string[] { rec.prodName, rec.adjustedRating.ToString(), rec.dateAnalyzed.ToString() });
+                listView1.Items.Add(item);
+            }
+        }
+        private void listView1_MouseDoubleClick(object sender, EventArgs e) //Double click on history item to open display window
         {
             if (listView1.SelectedItems.Count == 0)
             {
