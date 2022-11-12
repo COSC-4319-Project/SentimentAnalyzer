@@ -40,5 +40,10 @@ namespace SentimentAnalyzer
             ResultsText.Text = text;
             Console.WriteLine("Analysis complete took: " + (startTime - DateTime.Now));
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SelectionForm.ShowDialog();
+        }
     }
 }

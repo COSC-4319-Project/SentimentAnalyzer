@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>image_2022-11-11_165327069.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -60,6 +63,18 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.cs">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignUpForm.Designer.cs">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HistoryListDisplay.cs">
       <SubType>Form</SubType>
@@ -91,6 +106,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignUpForm.resx">
+      <DependentUpon>SignUpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HistoryListDisplay.resx">
       <DependentUpon>HistoryListDisplay.cs</DependentUpon>
@@ -127,6 +148,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\placeholderProductImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%282%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%283%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%284%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%285%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReReviewLogo%286%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="image_2022-11-11_165327069.ico" />
+    <None Include="Resources\ReReviewLogo%286%291.png" />
+    <None Include="Resources\ReReviewLogo%282%293.png" />
+    <None Include="Resources\126586_read_book_icon.png" />
+    <None Include="Resources\126582_edit_pencil_write_icon.png" />
+    <None Include="Resources\126577_search_find_icon.png" />
+    <None Include="Resources\126572_home_house_icon.png" />
+    <None Include="Resources\ReReviewLogo%282%292.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

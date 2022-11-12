@@ -40,17 +40,7 @@ namespace SentimentAnalyzer
 
         private void createAcctButt_Click(object sender, EventArgs e)
         {
-            if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
-            {
-                if (ServerClient.CreateAccount(UsernameBox.Text, PasswordBox.Text, "Name"))
-                {
-                    Close();
-                }
-                else
-                {
-                    resultLabel.Text = "ERR: User Exists";
-                }
-            }
+            SignUpForm.ShowDialoug();
         }
 
         private void guestCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -68,6 +58,11 @@ namespace SentimentAnalyzer
                 UsernameBox.Text = "";
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form3.ShowDialog();
         }
     }
 }

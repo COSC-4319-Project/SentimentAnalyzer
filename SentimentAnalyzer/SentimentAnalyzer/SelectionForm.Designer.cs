@@ -28,61 +28,105 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.errorInfoLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.batchButton = new System.Windows.Forms.Button();
             this.singleReviewButton = new System.Windows.Forms.Button();
             this.historyButton = new System.Windows.Forms.Button();
-            this.errorInfoLabel = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // batchButton
-            // 
-            this.batchButton.Location = new System.Drawing.Point(29, 24);
-            this.batchButton.Name = "batchButton";
-            this.batchButton.Size = new System.Drawing.Size(75, 70);
-            this.batchButton.TabIndex = 0;
-            this.batchButton.Text = "URL";
-            this.batchButton.UseVisualStyleBackColor = true;
-            this.batchButton.Click += new System.EventHandler(this.batchButton_Click);
-            // 
-            // singleReviewButton
-            // 
-            this.singleReviewButton.Location = new System.Drawing.Point(125, 24);
-            this.singleReviewButton.Name = "singleReviewButton";
-            this.singleReviewButton.Size = new System.Drawing.Size(75, 70);
-            this.singleReviewButton.TabIndex = 1;
-            this.singleReviewButton.Text = "Single Review";
-            this.singleReviewButton.UseVisualStyleBackColor = true;
-            this.singleReviewButton.Click += new System.EventHandler(this.singleReviewButton_Click);
-            // 
-            // historyButton
-            // 
-            this.historyButton.Location = new System.Drawing.Point(220, 24);
-            this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(75, 70);
-            this.historyButton.TabIndex = 2;
-            this.historyButton.Text = "History";
-            this.historyButton.UseVisualStyleBackColor = true;
-            this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
             // 
             // errorInfoLabel
             // 
             this.errorInfoLabel.AutoSize = true;
-            this.errorInfoLabel.Location = new System.Drawing.Point(26, 106);
+            this.errorInfoLabel.Location = new System.Drawing.Point(52, 204);
+            this.errorInfoLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.errorInfoLabel.Name = "errorInfoLabel";
-            this.errorInfoLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorInfoLabel.Size = new System.Drawing.Size(0, 25);
             this.errorInfoLabel.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Orange;
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Controls.Add(this.batchButton);
+            this.panel1.Controls.Add(this.singleReviewButton);
+            this.panel1.Controls.Add(this.historyButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(446, 958);
+            this.panel1.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::SentimentAnalyzer.Properties.Resources.ReReviewLogo_2_3;
+            this.pictureBox1.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(378, 223);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // batchButton
+            // 
+            this.batchButton.BackColor = System.Drawing.Color.SkyBlue;
+            this.batchButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.batchButton.Image = global::SentimentAnalyzer.Properties.Resources._126577_search_find_icon;
+            this.batchButton.Location = new System.Drawing.Point(6, 247);
+            this.batchButton.Margin = new System.Windows.Forms.Padding(6);
+            this.batchButton.Name = "batchButton";
+            this.batchButton.Size = new System.Drawing.Size(342, 135);
+            this.batchButton.TabIndex = 0;
+            this.batchButton.Text = "   Amazon Review";
+            this.batchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.batchButton.UseVisualStyleBackColor = false;
+            this.batchButton.Click += new System.EventHandler(this.batchButton_Click);
+            // 
+            // singleReviewButton
+            // 
+            this.singleReviewButton.BackColor = System.Drawing.Color.SkyBlue;
+            this.singleReviewButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.singleReviewButton.Image = global::SentimentAnalyzer.Properties.Resources._126582_edit_pencil_write_icon;
+            this.singleReviewButton.Location = new System.Drawing.Point(6, 404);
+            this.singleReviewButton.Margin = new System.Windows.Forms.Padding(6);
+            this.singleReviewButton.Name = "singleReviewButton";
+            this.singleReviewButton.Size = new System.Drawing.Size(342, 135);
+            this.singleReviewButton.TabIndex = 1;
+            this.singleReviewButton.Text = "   Custom Review";
+            this.singleReviewButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.singleReviewButton.UseVisualStyleBackColor = false;
+            this.singleReviewButton.Click += new System.EventHandler(this.singleReviewButton_Click);
+            // 
+            // historyButton
+            // 
+            this.historyButton.BackColor = System.Drawing.Color.SkyBlue;
+            this.historyButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.historyButton.Image = global::SentimentAnalyzer.Properties.Resources._126586_read_book_icon;
+            this.historyButton.Location = new System.Drawing.Point(6, 564);
+            this.historyButton.Margin = new System.Windows.Forms.Padding(6);
+            this.historyButton.Name = "historyButton";
+            this.historyButton.Size = new System.Drawing.Size(342, 135);
+            this.historyButton.TabIndex = 2;
+            this.historyButton.Text = "   Review History";
+            this.historyButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.historyButton.UseVisualStyleBackColor = false;
+            this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
             // 
             // SelectionForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 116);
+            this.BackColor = System.Drawing.Color.PeachPuff;
+            this.ClientSize = new System.Drawing.Size(1694, 958);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.errorInfoLabel);
-            this.Controls.Add(this.historyButton);
-            this.Controls.Add(this.singleReviewButton);
-            this.Controls.Add(this.batchButton);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "SelectionForm";
-            this.Text = "SelectionForm";
+            this.Text = "Re:Review-Home";
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,5 +138,7 @@
         private System.Windows.Forms.Button singleReviewButton;
         private System.Windows.Forms.Button historyButton;
         private System.Windows.Forms.Label errorInfoLabel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -63,9 +63,159 @@ namespace SentimentAnalyzer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _126572_home_house_icon {
+            get {
+                object obj = ResourceManager.GetObject("126572_home_house_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _126577_search_find_icon {
+            get {
+                object obj = ResourceManager.GetObject("126577_search_find_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _126582_edit_pencil_write_icon {
+            get {
+                object obj = ResourceManager.GetObject("126582_edit_pencil_write_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _126586_read_book_icon {
+            get {
+                object obj = ResourceManager.GetObject("126586_read_book_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap placeholderProductImage {
             get {
                 object obj = ResourceManager.GetObject("placeholderProductImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_2_ {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_2_1 {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(2)1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_2_2 {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(2)2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_2_3 {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(2)3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_3_ {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_4_ {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(4)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_5_ {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(5)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_6_ {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(6)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo_6_1 {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo(6)1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReReviewLogo1 {
+            get {
+                object obj = ResourceManager.GetObject("ReReviewLogo1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
