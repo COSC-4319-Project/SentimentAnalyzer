@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
+
+[using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,5 +40,8 @@ namespace SentimentAnalyzer
 
             return result;
         }
+
+        public static Regex ValidateUsername = new Regex("^[a-zA-Z0-9]+$");
+        public static Regex ValidatePassword = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
     }
 }

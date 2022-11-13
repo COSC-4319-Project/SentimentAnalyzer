@@ -17,6 +17,9 @@ namespace SentimentAnalyzer
             InitializeComponent();
         }
 
-     
+        private void signUp_Click(object sender, EventArgs e)
+        {
+            if(Utilites.ValidatePassword.IsMatch(user))
+        }
     }
 }

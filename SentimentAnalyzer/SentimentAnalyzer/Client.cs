@@ -9,7 +9,7 @@ using System.IO;
 
 namespace SentimentAnalyzer
 {
-    class ServerClient
+    class Client
     {
         public static string serverIP = "127.0.0.1";
         public static int port = 25555;
@@ -112,9 +112,44 @@ namespace SentimentAnalyzer
         {
             Connect();
             SendMessage(string.Format("UAP|{0}|{1}|{2}", username, oldPassowrd, newPassword));
+            string response = ReciveMessage();
             tcpClient.Close();
 
-            if (ReciveMessage() == "VALID")
+            if (response == "VALID")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool RequestPasswordToken(string username)
+        {
+            Connect();
+            SendMessage(string.Format(("ACT|RST|REQ|{0}"), username));
+            string response = ReciveMessage();
+            tcpClient.Close();
+
+            if (response == "VALID")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool ResetPasssword(string username, string token, string newPassword)
+        {
+            Connect();
+            SendMessage(string.Format(("ACT|RST|{0}|{1}|{2}"), username, token, newPassword));
+            string response = ReciveMessage();
+            tcpClient.Close();
+
+            if (response == "VALID")
             {
                 return true;
             }
@@ -128,16 +163,18 @@ namespace SentimentAnalyzer
         {
             Connect();
             SendMessage(string.Format("HIS|SNG|{0}", asinID));
-            tcpClient.Close();
+            
 
             string[] splitRes = ReciveMessage().Split('|');
 
             if (splitRes.Length > 1) //if valid response
             {
+                tcpClient.Close();
                 return new HistoryRec(splitRes);
             }
             else
             {
+                tcpClient.Close();
                 return new HistoryRec(-1);
             }
         }
@@ -152,6 +189,7 @@ namespace SentimentAnalyzer
                 return null;
             }
 
+            tcpClient.Close();
             return records;
         }
 

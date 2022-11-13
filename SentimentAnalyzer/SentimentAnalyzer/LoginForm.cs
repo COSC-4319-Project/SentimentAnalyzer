@@ -22,12 +22,12 @@ namespace SentimentAnalyzer
         {
             if (guestCheckBox.Checked)
             {
-                ServerClient.GuestLogin();
+                Client.GuestLogin();
                 Close();
             }
             else if (UsernameBox.Text.Length > 0 && PasswordBox.Text.Length > 0)
             {
-                if (ServerClient.AttemptLogin(UsernameBox.Text, PasswordBox.Text))
+                if (Client.AttemptLogin(UsernameBox.Text, PasswordBox.Text))
                 {
                     Close();
                 }
@@ -62,7 +62,7 @@ namespace SentimentAnalyzer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form3.ShowDialog();
+            ResetPassword.ShowDialog();
         }
     }
 }

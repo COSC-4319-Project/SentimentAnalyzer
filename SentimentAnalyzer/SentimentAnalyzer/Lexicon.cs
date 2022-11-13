@@ -129,35 +129,35 @@ namespace SentimentAnalyzer
 
         public static void UpdateLexiconsFromServer()
         {
-            if (ServerClient.offlineMode)
+            if (Client.offlineMode)
             {
                 return;
             }
 
-            if (ServerClient.GetLexiconVersion(0) > lexVersions[0])
+            if (Client.GetLexiconVersion(0) > lexVersions[0])
             {
-                posWords = ServerClient.GetLexicon(0);
+                posWords = Client.GetLexicon(0);
             }
 
-            if (ServerClient.GetLexiconVersion(1) > lexVersions[1])
+            if (Client.GetLexiconVersion(1) > lexVersions[1])
             {
-                posWords = ServerClient.GetLexicon(0);
+                posWords = Client.GetLexicon(0);
             }
-            if (ServerClient.GetLexiconVersion(2) > lexVersions[2])
+            if (Client.GetLexiconVersion(2) > lexVersions[2])
             {
-                posWords = ServerClient.GetLexicon(0);
+                posWords = Client.GetLexicon(0);
             }
-            if (ServerClient.GetLexiconVersion(3) > lexVersions[3])
+            if (Client.GetLexiconVersion(3) > lexVersions[3])
             {
-                posWords = ServerClient.GetLexicon(0);
+                posWords = Client.GetLexicon(0);
             }
-            if (ServerClient.GetLexiconVersion(4) > lexVersions[4])
+            if (Client.GetLexiconVersion(4) > lexVersions[4])
             {
-                posWords = ServerClient.GetLexicon(0);
+                posWords = Client.GetLexicon(0);
             }
-            if (ServerClient.GetLexiconVersion(5) > lexVersions[5])
+            if (Client.GetLexiconVersion(5) > lexVersions[5])
             {
-                ParseEmojiLex(ServerClient.GetLexicon(0));
+                ParseEmojiLex(Client.GetLexicon(0));
             }
         }
 

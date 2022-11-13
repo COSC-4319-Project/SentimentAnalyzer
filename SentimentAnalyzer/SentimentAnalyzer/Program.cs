@@ -17,7 +17,7 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {
-            ServerClient.InitializeClient();
+            Client.InitializeClient();
             
             //Login.LoadUserDB(Application.StartupPath);
             Lexicon.LoadLexicon(Application.StartupPath);
@@ -26,7 +26,7 @@ namespace SentimentAnalyzer
 
             Application.Run(new LoginForm());
 
-            if (ServerClient.loggedin)
+            if (Client.loggedin)
             {
                 Lexicon.UpdateLexiconsFromServer();
                 Application.Run(new SelectionForm());

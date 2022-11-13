@@ -64,11 +64,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form3.cs">
+    <Compile Include="ResetPassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="ResetPassword.Designer.cs">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
     </Compile>
     <Compile Include="SignUpForm.cs">
       <SubType>Form</SubType>
@@ -99,7 +99,7 @@
       <DependentUpon>SelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sentiment.cs" />
-    <Compile Include="ServerClient.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Utilites.cs" />
     <EmbeddedResource Include="BatchReviewDisplay.resx">
       <DependentUpon>BatchReviewDisplay.cs</DependentUpon>
@@ -107,8 +107,8 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="ResetPassword.resx">
+      <DependentUpon>ResetPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SignUpForm.resx">
       <DependentUpon>SignUpForm.cs</DependentUpon>

@@ -47,7 +47,7 @@ namespace SentimentAnalyzer
         public void GetHistoryItems(int uID)
         {
             listView1.Items.Clear(); //Empty current list
-            foreach (HistoryRec rec in ServerClient.GetUserHistory())
+            foreach (HistoryRec rec in Client.GetUserHistory())
             {
                 ListViewItem item = new ListViewItem(new string[] { rec.prodName, rec.adjustedRating.ToString(), rec.dateAnalyzed.ToString() });
                 listView1.Items.Add(item);
