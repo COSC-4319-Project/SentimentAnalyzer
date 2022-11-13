@@ -35,9 +35,10 @@ namespace SentimentAnalyzer
             //Scrapper Connection here
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void homeButton_Click(object sender, EventArgs e)
         {
-            SelectionForm.ShowDialog();
+            Program.selectionForm.Focus();
+            Close();
         }
     }
 }

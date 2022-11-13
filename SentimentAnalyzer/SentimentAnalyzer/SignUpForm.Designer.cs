@@ -1,7 +1,7 @@
 ﻿
 namespace SentimentAnalyzer
 {
-    partial class Form2
+    partial class SignUpForm
     {
         /// <summary>
         /// Required designer variable.

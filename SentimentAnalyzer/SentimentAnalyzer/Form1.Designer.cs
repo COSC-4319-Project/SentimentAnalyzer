@@ -134,7 +134,7 @@ namespace SentimentAnalyzer
             this.HomeButton.Text = "   Home";
             this.HomeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.HomeButton.UseVisualStyleBackColor = false;
-            this.HomeButton.Click += new System.EventHandler(this.button1_Click);
+            this.HomeButton.Click += new System.EventHandler(this.homeButton_Click);
             // 
             // pictureBox1
             // 

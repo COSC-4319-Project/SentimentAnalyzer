@@ -33,14 +33,15 @@ namespace SentimentAnalyzer
                 }
                 else
                 {
-                    resultLabel.Text = "ERR: Invalid user or pswd";
+                    MessageBox.Show("ERR: Invalid user or pswd");
+                    //resultLabel.Text = "ERR: Invalid user or pswd";
                 }
             }
         }
 
         private void createAcctButt_Click(object sender, EventArgs e)
         {
-            SignUpForm.ShowDialoug();
+            new SignUpForm().ShowDialog();
         }
 
         private void guestCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -62,7 +63,7 @@ namespace SentimentAnalyzer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ResetPassword.ShowDialog();
+            new ResetPassword().ShowDialog();
         }
     }
 }

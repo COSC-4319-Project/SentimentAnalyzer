@@ -94,7 +94,7 @@ namespace SentimentAnalyzer
         { 
             Connect();
             SendMessage(string.Format("ACT|{0}|{1}|{2}", username, password, name));
-            
+            Console.WriteLine("messageSent");
 
             if (ReciveMessage() == "VALID")
             {

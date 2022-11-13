@@ -10,7 +10,7 @@ namespace SentimentAnalyzer
 {
     static class Program
     {
-        
+        public static SelectionForm selectionForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -24,24 +24,15 @@ namespace SentimentAnalyzer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            selectionForm = new SelectionForm();
+
             Application.Run(new LoginForm());
 
             if (Client.loggedin)
             {
                 Lexicon.UpdateLexiconsFromServer();
-                Application.Run(new SelectionForm());
+                Application.Run(selectionForm);
             }
-        }
-
-        public static void RunBatch(Form calledFrom)
-        {
-            calledFrom.Close();
-            Application.Run(new BatchReviewDisplay());
-        }
-        public static void RunSingle(Form calledFrom)
-        {
-            calledFrom.Close();
-            Application.Run(new Form1());
         }
     }
 }
