@@ -17,16 +17,23 @@ namespace SentimentAnalyzer
 
         const int negationSteps = 2; //Number of steps forward and backward.
 
-        public static float BatchAnalyze(List<string> paragraphs)
+        public static float BatchAnalyze(List<Review> reviews, out int totalParagraphs, out int posParagraphs, out int negParagraphs, out float avgConfidence, out float origRating)
         {
-            int totalParagraphs = 0;
-            int posParagraphs = 0;
-            int negParagraphs = 0;
+            totalParagraphs = 0;
+            posParagraphs = 0;
+            negParagraphs = 0;
+            avgConfidence = 0;
+            origRating = 0;
 
-            foreach (string paragraph in paragraphs)
+            foreach (Review review in reviews)
             {
+                string paragraph = review.title + " " + review.body;
+                float confidence;
+
+                origRating += review.ParseRating();
+
                 totalParagraphs++;
-                int tempVal = Analyze(paragraph);
+                int tempVal = Analyze(paragraph, out confidence);
                 if (tempVal == -1)
                 {
                     negParagraphs++;
@@ -35,18 +42,25 @@ namespace SentimentAnalyzer
                 {
                     posParagraphs++;
                 }
-            }
 
-            return ((float)posParagraphs/(float)totalParagraphs - (float)negParagraphs / (float)totalParagraphs) * 5;
+                avgConfidence += confidence;
+            }
+            avgConfidence = avgConfidence / (float)totalParagraphs;
+            origRating = origRating / (float)totalParagraphs;
+
+            return ((float)posParagraphs/(float)totalParagraphs * 5);
             
         }
 
-        public static int Analyze(string text, out float negPerc, out float neuPerc, out float posPerc) //Entry point for sentiment class
+        public static int Analyze(string text, out float negPerc, out float neuPerc, out float posPerc, out int wordCount, out float confidence) //Entry point for sentiment class
         {
             Paragraph paragraph = Tokenize(text);
             negPerc = (float)paragraph.negWords / (float)paragraph.wordCount;
             posPerc = (float)paragraph.posWords / (float)paragraph.wordCount;
             neuPerc = ((float)paragraph.wordCount - (float)paragraph.negWords - (float)paragraph.posWords) / (float)paragraph.wordCount;
+            wordCount = paragraph.wordCount;
+            confidence = (float)(paragraph.posWords + paragraph.negWords) / (float)paragraph.wordCount;
+            confidence *= 7;
             //Debug Outputs
             Console.WriteLine("Neg %:" + negPerc);
             Console.WriteLine("Neu %:" + neuPerc);
@@ -65,10 +79,11 @@ namespace SentimentAnalyzer
             }
             return 0; 
         }
-        public static int Analyze(string text) //Calls analyze without additonal info
+        public static int Analyze(string text, out float confidence) //Calls analyze without additonal info
         {
+            int count;
             float X, Y, Z = 0;
-            return Analyze(text, out X, out Y, out Z);
+            return Analyze(text, out X, out Y, out Z, out count, out confidence);
         }
 
         //Idea is to break the sentence up into analyzable tagged chunks

@@ -32,7 +32,20 @@ namespace SentimentAnalyzer
                 return;
             }
 
-            //Scrapper Connection here
+            List<Review> reviews = ReviewScrapperConnection.GetReviews(url);
+
+            int totalRev, posRev, NegRev;
+            float avgCon, origRating;
+            float modRating = Sentiment.BatchAnalyze(reviews, out totalRev, out posRev, out NegRev, out avgCon, out origRating);
+
+            productName.Text = Utilites.GetProdNameFromURL(url);
+            pictureBox1.Image = Image.FromFile("user_img.jpg");
+            modifiedStarRatingRes.Text = string.Format("{0} out of 5 stars", modRating);
+            numReviewsRes.Text = totalRev.ToString();
+            numPosReviewsRes.Text = posRev.ToString();
+            numNegativeReviewRes.Text = NegRev.ToString();
+            avgConRes.Text = avgCon.ToString();
+            originalStarVal.Text = string.Format("{0} out of 5 stars", origRating);
         }
 
         private void homeButton_Click(object sender, EventArgs e)

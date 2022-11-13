@@ -22,8 +22,11 @@ namespace SentimentAnalyzer
 
         private void AnalyzeButton_Click(object sender, EventArgs e)
         {
-            DateTime startTime = DateTime.Now;
-            int x = Sentiment.Analyze(ReviewInputBox.Text);
+            int wordCount;
+            float confidence, negPerc, neuPerc, posPerc;
+
+            int x = Sentiment.Analyze(ReviewInputBox.Text, out negPerc, out neuPerc, out posPerc, out wordCount, out confidence);
+
             string text = "";
             switch (x)
             {
@@ -38,7 +41,12 @@ namespace SentimentAnalyzer
                     break;
             }
             ResultsText.Text = text;
-            Console.WriteLine("Analysis complete took: " + (startTime - DateTime.Now));
+
+            negWordCount.Text = String.Format("Value: {0:P2}.", negPerc);
+            posWordCount.Text = String.Format("Value: {0:P2}.", posPerc);
+            neutralWordCount.Text = String.Format("Value: {0:P2}.", neuPerc);
+            wordCountRes.Text = wordCount.ToString();
+
         }
 
         private void homeButton_Click(object sender, EventArgs e)

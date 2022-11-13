@@ -11,15 +11,14 @@ namespace SentimentAnalyzer
     static class Program
     {
         public static SelectionForm selectionForm;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {   
             Client.InitializeClient();
-            
-            //Login.LoadUserDB(Application.StartupPath);
             Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

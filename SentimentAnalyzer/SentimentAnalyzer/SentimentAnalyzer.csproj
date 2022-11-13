@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="image_2022-11-11_165327069.ico" />
+    <Content Include="Scraper\amazon.py" />
     <None Include="Resources\ReReviewLogo%286%291.png" />
     <None Include="Resources\ReReviewLogo%282%293.png" />
     <None Include="Resources\126586_read_book_icon.png" />

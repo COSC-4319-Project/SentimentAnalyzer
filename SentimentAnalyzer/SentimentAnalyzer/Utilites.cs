@@ -40,6 +40,24 @@ namespace SentimentAnalyzer
             return result;
         }
 
+        public static string GetAsinFromURL(string url)
+        {
+            string[] splitURL = url.Split('/');
+            if ((splitURL.Length > 5) & (splitURL[5].Length == 10))
+            {
+                return splitURL[5];
+            }
+            return "";
+        }
+        public static string GetProdNameFromURL(string url)
+        {
+            string[] splitURL = url.Split('/');
+            if ((splitURL.Length > 5))
+            {
+                return splitURL[3];
+            }
+            return "";
+        }
         public static Regex ValidateUsername = new Regex("^[a-zA-Z0-9]+$");
         public static Regex ValidatePassword = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
     }
