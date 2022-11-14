@@ -24,8 +24,8 @@ namespace SentimentAnalyzer
             Application.SetCompatibleTextRenderingDefault(false);
 
             selectionForm = new SelectionForm();
-
-            Application.Run(new LoginForm());
+            Application.Run(selectionForm);
+            //Application.Run(new LoginForm());
 
             if (Client.loggedin)
             {

@@ -31,7 +31,7 @@ namespace SentimentAnalyzer
                 float confidence;
 
                 origRating += review.ParseRating();
-
+                
                 totalParagraphs++;
                 int tempVal = Analyze(paragraph, out confidence);
                 if (tempVal == -1)
@@ -62,12 +62,12 @@ namespace SentimentAnalyzer
             confidence = (float)(paragraph.posWords + paragraph.negWords) / (float)paragraph.wordCount;
             confidence *= 7;
             //Debug Outputs
-            Console.WriteLine("Neg %:" + negPerc);
-            Console.WriteLine("Neu %:" + neuPerc);
-            Console.WriteLine("Pos %:" + posPerc);
-            Console.WriteLine("Word cnt:" + paragraph.wordCount);
-            Console.WriteLine("posWord cnt:" + paragraph.posWords);
-            Console.WriteLine("negWord cnt:" + paragraph.negWords);
+            //Console.WriteLine("Neg %:" + negPerc);
+            //Console.WriteLine("Neu %:" + neuPerc);
+            //Console.WriteLine("Pos %:" + posPerc);
+            //Console.WriteLine("Word cnt:" + paragraph.wordCount);
+            //Console.WriteLine("posWord cnt:" + paragraph.posWords);
+            //Console.WriteLine("negWord cnt:" + paragraph.negWords);
 
             if (negPerc > posPerc)
             {
@@ -92,13 +92,13 @@ namespace SentimentAnalyzer
             text = text.ToLower(); //Set string data to lower case
             Paragraph paragraph = new Paragraph();
             paragraph.sentences = new List<Sentence>();
-            Console.WriteLine("Pre Tokenize:");
-            Console.WriteLine(text);
-            Console.WriteLine("Tokenize:");
+            //Console.WriteLine("Pre Tokenize:");
+            //Console.WriteLine(text);
+            //Console.WriteLine("Tokenize:");
 
             foreach (string sent in text.Split(delemiterCharsSents)) //Split sentences
             {
-                Console.WriteLine("Sent:" + sent);
+                //Console.WriteLine("Sent:" + sent);
                 Sentence sentence = new Sentence();
                 sentence.words = new List<TaggedWord>();
                 bool negate = false; //flag to swap rest of sentence.
@@ -164,7 +164,7 @@ namespace SentimentAnalyzer
                     }
 
                     sentence.words.Add(aWord); //add new word
-                    Console.WriteLine(aWord);//Debuging purposes
+                    //Console.WriteLine(aWord);//Debuging purposes
                 }
                 paragraph.sentences.Add(sentence);
             }

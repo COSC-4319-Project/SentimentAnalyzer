@@ -60,13 +60,13 @@ namespace SentimentAnalyzer
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
 
             // make sure we can read the output from stdout 
-            myProcessStartInfo.UseShellExecute = false;
-            myProcessStartInfo.RedirectStandardOutput = true;
+            myProcessStartInfo.UseShellExecute = true;
+            //myProcessStartInfo.RedirectStandardOutput = true;
 
             // start python app with 3 arguments  
             // 1st arguments is pointer to itself,  
             // 2nd and 3rd are actual arguments we want to send 
-            myProcessStartInfo.Arguments = myPythonApp + " " + x + " " + y;
+            myProcessStartInfo.Arguments = myPythonApp;
 
             Process myProcess = new Process();
             // assign start information to the process 
@@ -79,8 +79,8 @@ namespace SentimentAnalyzer
             // Read the standard output of the app we called.  
             // in order to avoid deadlock we will read output first 
             // and then wait for process terminate: 
-            StreamReader myStreamReader = myProcess.StandardOutput;
-            string myString = myStreamReader.ReadLine();
+            //StreamReader myStreamReader = myProcess.StandardOutput;
+            //string myString = myStreamReader.ReadLine();
 
             /*if you need to read multiple lines, you might use: 
                 string myString = myStreamReader.ReadToEnd() */
@@ -90,7 +90,7 @@ namespace SentimentAnalyzer
             myProcess.Close();
 
             // write the output we got from python app 
-            Console.WriteLine("Value received from script: " + myString);
+            //Console.WriteLine("Value received from script: " + myString);
         }
 
         public static string GetPythonPath()
@@ -136,10 +136,10 @@ namespace SentimentAnalyzer
         {
             return string.Format("Title: {0} Rating: {1} Body: {2}", title, rating, body);
         }
-        public int ParseRating()
+        public float ParseRating()
         {
-            int rate = 0;
-            int.TryParse(rating.Split(' ')[0], out rate);
+            float rate = 0;
+            float.TryParse(rating.Split(' ')[0], out rate);
             return rate;
         }
     }

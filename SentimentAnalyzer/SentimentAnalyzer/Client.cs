@@ -16,7 +16,7 @@ namespace SentimentAnalyzer
         private static NetworkStream msgStream = null;
         private static TcpClient tcpClient;
 
-        private static User currentUser;
+        public static User currentUser;
         public static bool loggedin = false;
         public static bool offlineMode = false;
         public static void InitializeClient()
@@ -49,7 +49,11 @@ namespace SentimentAnalyzer
 
         public static List<string> GetLexicon(int lexNum)
         {
-            Connect();
+            if (!Connect())
+            {
+                return null;
+            }
+            
             SendMessage("LEX|REQ|" + lexNum);
             int length = int.Parse(ReciveMessage()); //Get length of lexicon
             Console.WriteLine(length);
@@ -61,7 +65,10 @@ namespace SentimentAnalyzer
 
         public static int GetLexiconVersion(int lexNum)
         {
-            Connect();
+            if (!Connect())
+            {
+                return -1;
+            }
             SendMessage("LEX|VER|" + lexNum);
             int ver = int.Parse(ReciveMessage()); //Get length of lexicon
             tcpClient.Close();
@@ -71,7 +78,10 @@ namespace SentimentAnalyzer
 
         public static bool AttemptLogin(string username, string password)
         {
-            Connect();
+            if (!Connect())
+            {
+                return false;
+            }
             SendMessage("LGN|" + username + "|" + password);
             string response = ReciveMessage();
             string[] splitRes = response.Split('|');
@@ -91,8 +101,11 @@ namespace SentimentAnalyzer
         }
 
         public static bool CreateAccount(string username, string password, string name)
-        { 
-            Connect();
+        {
+            if (!Connect())
+            {
+                return false;
+            }
             SendMessage(string.Format("ACT|{0}|{1}|{2}", username, password, name));
             Console.WriteLine("messageSent");
 
@@ -110,7 +123,10 @@ namespace SentimentAnalyzer
 
         public static bool UpdateAccount(string username, string oldPassowrd, string newPassword)
         {
-            Connect();
+            if (!Connect())
+            {
+                return false;
+            }
             SendMessage(string.Format("UAP|{0}|{1}|{2}", username, oldPassowrd, newPassword));
             string response = ReciveMessage();
             tcpClient.Close();
@@ -127,7 +143,10 @@ namespace SentimentAnalyzer
 
         public static bool RequestPasswordToken(string username)
         {
-            Connect();
+            if (!Connect())
+            {
+                return false;
+            }
             SendMessage(string.Format(("ACT|RST|REQ|{0}"), username));
             string response = ReciveMessage();
             tcpClient.Close();
@@ -144,7 +163,10 @@ namespace SentimentAnalyzer
 
         public static bool ResetPasssword(string username, string token, string newPassword)
         {
-            Connect();
+            if (!Connect())
+            {
+                return false;
+            }
             SendMessage(string.Format(("ACT|RST|{0}|{1}|{2}"), username, token, newPassword));
             string response = ReciveMessage();
             tcpClient.Close();
@@ -161,7 +183,10 @@ namespace SentimentAnalyzer
 
         public static HistoryRec RequestHistory(string asinID)
         {
-            Connect();
+            if (!Connect())
+            {
+                return new HistoryRec();
+            }
             SendMessage(string.Format("HIS|SNG|{0}", asinID));
             
 
@@ -191,6 +216,14 @@ namespace SentimentAnalyzer
 
             tcpClient.Close();
             return records;
+        }
+
+        //AHIS|asin|uID|adjRat|productName|numRev|numPos|numNeg|connfidence|dateAnalyzed|origRating
+        public static void SendReviewHistory(HistoryRec rec)
+        {
+            Connect();
+            SendMessage(string.Format("AHIS|{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}", rec.asinID,rec.uID, rec.adjustedRating, rec.prodName, rec.numRev,rec.numPos,rec.numNeg, rec.confidence, rec.dateAnalyzed,rec.orginalRating));
+            tcpClient.Close();
         }
 
         static void SendMessage(string message)
@@ -255,10 +288,11 @@ namespace SentimentAnalyzer
         public int numPos;
         public float confidence;
         public float adjustedRating;
+        public float orginalRating;
         public int uID;
         public DateTime dateAnalyzed;
 
-        public HistoryRec(string asinID, string prodName, int numRev, int numPos, int numNeg, float confidence, float adjustedRating, int uID, DateTime dateAnalyzed)
+        public HistoryRec(string asinID, string prodName, int numRev, int numPos, int numNeg, float confidence, float adjustedRating, float origRating, int uID, DateTime dateAnalyzed)
         {
             this.asinID = asinID;
             this.numRev = numRev;
@@ -269,8 +303,10 @@ namespace SentimentAnalyzer
             this.uID = uID;
             this.dateAnalyzed = dateAnalyzed;
             this.prodName = prodName;
+            this.orginalRating = origRating;
         }
 
+        //asin|uID|adjRat|productName|numRev|numPos|numNeg|connfidence|dateAnalyzed|origRating
         public HistoryRec(string[] message) //Parse response from server into record
         {
             asinID = message[0];
@@ -282,12 +318,13 @@ namespace SentimentAnalyzer
             numNeg = int.Parse(message[6]);
             confidence = float.Parse(message[7]);
             dateAnalyzed = DateTime.Parse(message[8]);
+            orginalRating = float.Parse(message[9]);
         }
 
         public HistoryRec(int val) //Used for empty record.
         {
             uID = numNeg = numPos = numRev = val;
-            confidence = adjustedRating = (float) val;
+            confidence = adjustedRating = orginalRating =(float) val;
             asinID = val.ToString();
             dateAnalyzed = DateTime.Now;
             prodName = "EMPTY";
