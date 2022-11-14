@@ -107,6 +107,7 @@
             this.ClientSize = new System.Drawing.Size(1687, 951);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "HistoryListDisplay";
             this.Text = "Re:Review-Analysis History";
