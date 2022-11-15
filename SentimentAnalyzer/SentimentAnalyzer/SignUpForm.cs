@@ -29,6 +29,11 @@ namespace SentimentAnalyzer
                 MessageBox.Show("Password must be 8 characters long, contain an upper and lowercase letter, a number, and a symbol (#?!@$%^&*-).");
                 return;
             }
+            if (!Utilites.ValidateEmail.IsMatch(emailBox.Text))
+            {
+                MessageBox.Show("Please enter a valid email");
+                return;
+            }
 
             if (Client.CreateAccount(usernameBox.Text, passwordBox.Text, emailBox.Text))
             {

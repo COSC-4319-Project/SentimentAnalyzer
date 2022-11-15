@@ -10,7 +10,9 @@ namespace SentimentAnalyzer
     static class Utilites
     {
         //thanks to Steve Cooper - https://stackoverflow.com/questions/1547476/easiest-way-to-split-a-string-on-newlines-in-net
-        public static IEnumerable<string> SplitToLines(this string input)
+        
+        //efficently split string along new line characters. (esenstially the same string.split() but far faster)
+        public static IEnumerable<string> SplitToLines(this string input) 
         {
             if (input == null)
             {
@@ -27,6 +29,7 @@ namespace SentimentAnalyzer
             }
         }
 
+        //Check url is in a valid format.
         public static bool CheckValidAmazonURL(string url)
         {
             //Example URL: https://www.amazon.com/Liberty-Imports-Jumbo-Rubber-Duck/dp/B00ODBPB1U/
@@ -40,6 +43,7 @@ namespace SentimentAnalyzer
             return result;
         }
 
+        //extract asin from url
         public static string GetAsinFromURL(string url)
         {
             string[] splitURL = url.Split('/');
@@ -49,6 +53,8 @@ namespace SentimentAnalyzer
             }
             return "";
         }
+
+        //extract product name from url
         public static string GetProdNameFromURL(string url)
         {
             string[] splitURL = url.Split('/');
@@ -58,7 +64,11 @@ namespace SentimentAnalyzer
             }
             return "";
         }
+
+        //Regex for client side input validation.
         public static Regex ValidateUsername = new Regex("^[a-zA-Z0-9]+$");
         public static Regex ValidatePassword = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+        public static Regex ValidateEmail = new Regex("^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$");
+
     }
 }
