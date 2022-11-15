@@ -69,9 +69,11 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(535, 43);
+            this.groupBox1.Location = new System.Drawing.Point(1070, 83);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 314);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(396, 604);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Analysis Results";
@@ -79,45 +81,50 @@
             // modifiedStarRatingRes
             // 
             this.modifiedStarRatingRes.AutoSize = true;
-            this.modifiedStarRatingRes.Location = new System.Drawing.Point(137, 110);
+            this.modifiedStarRatingRes.Location = new System.Drawing.Point(274, 212);
+            this.modifiedStarRatingRes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.modifiedStarRatingRes.Name = "modifiedStarRatingRes";
-            this.modifiedStarRatingRes.Size = new System.Drawing.Size(13, 13);
+            this.modifiedStarRatingRes.Size = new System.Drawing.Size(24, 25);
             this.modifiedStarRatingRes.TabIndex = 13;
             this.modifiedStarRatingRes.Text = "0";
             // 
             // avgConRes
             // 
             this.avgConRes.AutoSize = true;
-            this.avgConRes.Location = new System.Drawing.Point(137, 87);
+            this.avgConRes.Location = new System.Drawing.Point(274, 167);
+            this.avgConRes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.avgConRes.Name = "avgConRes";
-            this.avgConRes.Size = new System.Drawing.Size(13, 13);
+            this.avgConRes.Size = new System.Drawing.Size(24, 25);
             this.avgConRes.TabIndex = 12;
             this.avgConRes.Text = "0";
             // 
             // numNegativeReviewRes
             // 
             this.numNegativeReviewRes.AutoSize = true;
-            this.numNegativeReviewRes.Location = new System.Drawing.Point(137, 65);
+            this.numNegativeReviewRes.Location = new System.Drawing.Point(274, 125);
+            this.numNegativeReviewRes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.numNegativeReviewRes.Name = "numNegativeReviewRes";
-            this.numNegativeReviewRes.Size = new System.Drawing.Size(13, 13);
+            this.numNegativeReviewRes.Size = new System.Drawing.Size(24, 25);
             this.numNegativeReviewRes.TabIndex = 11;
             this.numNegativeReviewRes.Text = "0";
             // 
             // numPosReviewsRes
             // 
             this.numPosReviewsRes.AutoSize = true;
-            this.numPosReviewsRes.Location = new System.Drawing.Point(137, 43);
+            this.numPosReviewsRes.Location = new System.Drawing.Point(274, 83);
+            this.numPosReviewsRes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.numPosReviewsRes.Name = "numPosReviewsRes";
-            this.numPosReviewsRes.Size = new System.Drawing.Size(13, 13);
+            this.numPosReviewsRes.Size = new System.Drawing.Size(24, 25);
             this.numPosReviewsRes.TabIndex = 10;
             this.numPosReviewsRes.Text = "0";
             // 
             // numReviewsRes
             // 
             this.numReviewsRes.AutoSize = true;
-            this.numReviewsRes.Location = new System.Drawing.Point(137, 21);
+            this.numReviewsRes.Location = new System.Drawing.Point(274, 40);
+            this.numReviewsRes.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.numReviewsRes.Name = "numReviewsRes";
-            this.numReviewsRes.Size = new System.Drawing.Size(13, 13);
+            this.numReviewsRes.Size = new System.Drawing.Size(24, 25);
             this.numReviewsRes.TabIndex = 9;
             this.numReviewsRes.Text = "0";
             // 
@@ -125,9 +132,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 110);
+            this.label5.Location = new System.Drawing.Point(12, 212);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 14);
+            this.label5.Size = new System.Drawing.Size(213, 25);
             this.label5.TabIndex = 8;
             this.label5.Text = "Modified Star Rating:";
             // 
@@ -135,9 +143,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 87);
+            this.label4.Location = new System.Drawing.Point(12, 167);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(105, 14);
+            this.label4.Size = new System.Drawing.Size(168, 25);
             this.label4.TabIndex = 7;
             this.label4.Text = "Avg. Confidence:";
             // 
@@ -145,9 +154,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 65);
+            this.label3.Location = new System.Drawing.Point(12, 125);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 14);
+            this.label3.Size = new System.Drawing.Size(180, 25);
             this.label3.TabIndex = 6;
             this.label3.Text = "Negative Reviews:";
             // 
@@ -155,9 +165,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 43);
+            this.label2.Location = new System.Drawing.Point(12, 83);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 14);
+            this.label2.Size = new System.Drawing.Size(171, 25);
             this.label2.TabIndex = 5;
             this.label2.Text = "Positive Reviews:";
             // 
@@ -165,9 +176,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 14);
+            this.label1.Size = new System.Drawing.Size(183, 25);
             this.label1.TabIndex = 4;
             this.label1.Text = "Reviews Analyzed:";
             // 
@@ -177,9 +189,11 @@
             this.groupBox2.Controls.Add(this.productName);
             this.groupBox2.Controls.Add(this.originalStarVal);
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Location = new System.Drawing.Point(225, 43);
+            this.groupBox2.Location = new System.Drawing.Point(450, 83);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(287, 314);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox2.Size = new System.Drawing.Size(574, 604);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Product Info";
@@ -188,9 +202,10 @@
             // 
             this.productName.AutoSize = true;
             this.productName.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productName.Location = new System.Drawing.Point(11, 196);
+            this.productName.Location = new System.Drawing.Point(22, 377);
+            this.productName.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.productName.Name = "productName";
-            this.productName.Size = new System.Drawing.Size(99, 14);
+            this.productName.Size = new System.Drawing.Size(167, 25);
             this.productName.TabIndex = 3;
             this.productName.Text = "Product Name";
             // 
@@ -198,18 +213,20 @@
             // 
             this.originalStarVal.AutoSize = true;
             this.originalStarVal.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.originalStarVal.Location = new System.Drawing.Point(11, 221);
+            this.originalStarVal.Location = new System.Drawing.Point(22, 425);
+            this.originalStarVal.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.originalStarVal.Name = "originalStarVal";
-            this.originalStarVal.Size = new System.Drawing.Size(92, 14);
+            this.originalStarVal.Size = new System.Drawing.Size(149, 25);
             this.originalStarVal.TabIndex = 2;
             this.originalStarVal.Text = "0 out of 5 stars";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::SentimentAnalyzer.Properties.Resources.placeholderProductImage;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(24, 40);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(167, 161);
+            this.pictureBox1.Size = new System.Drawing.Size(334, 310);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -218,26 +235,29 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(182, 13);
+            this.label6.Location = new System.Drawing.Point(364, 25);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(207, 14);
+            this.label6.Size = new System.Drawing.Size(352, 25);
             this.label6.TabIndex = 4;
             this.label6.Text = "Enter an Amazon product URL:";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(403, 9);
+            this.textBox1.Location = new System.Drawing.Point(806, 17);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(358, 20);
+            this.textBox1.Size = new System.Drawing.Size(712, 31);
             this.textBox1.TabIndex = 5;
             // 
             // analyzeButton
             // 
             this.analyzeButton.BackColor = System.Drawing.Color.SkyBlue;
             this.analyzeButton.Font = new System.Drawing.Font("Georgia", 7.875F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.analyzeButton.Location = new System.Drawing.Point(767, 2);
+            this.analyzeButton.Location = new System.Drawing.Point(1534, 4);
+            this.analyzeButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.analyzeButton.Name = "analyzeButton";
-            this.analyzeButton.Size = new System.Drawing.Size(100, 34);
+            this.analyzeButton.Size = new System.Drawing.Size(200, 65);
             this.analyzeButton.TabIndex = 6;
             this.analyzeButton.Text = "Analyze";
             this.analyzeButton.UseVisualStyleBackColor = false;
@@ -250,9 +270,9 @@
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(178, 506);
+            this.panel1.Size = new System.Drawing.Size(356, 973);
             this.panel1.TabIndex = 14;
             // 
             // HomeButton
@@ -261,10 +281,10 @@
             this.HomeButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.HomeButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HomeButton.Image = global::SentimentAnalyzer.Properties.Resources._126572_home_house_icon;
-            this.HomeButton.Location = new System.Drawing.Point(6, 129);
-            this.HomeButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.HomeButton.Location = new System.Drawing.Point(12, 248);
+            this.HomeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.HomeButton.Name = "HomeButton";
-            this.HomeButton.Size = new System.Drawing.Size(146, 47);
+            this.HomeButton.Size = new System.Drawing.Size(292, 90);
             this.HomeButton.TabIndex = 15;
             this.HomeButton.Text = "    Home";
             this.HomeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -274,26 +294,28 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::SentimentAnalyzer.Properties.Resources.ReReviewLogo_6_1;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 2);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Location = new System.Drawing.Point(0, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(177, 125);
+            this.pictureBox2.Size = new System.Drawing.Size(354, 240);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 15;
             this.pictureBox2.TabStop = false;
             // 
             // BatchReviewDisplay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
-            this.ClientSize = new System.Drawing.Size(870, 506);
+            this.ClientSize = new System.Drawing.Size(1740, 973);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.analyzeButton);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "BatchReviewDisplay";
             this.Text = "Re:Review-Amazon Review";
             this.groupBox1.ResumeLayout(false);

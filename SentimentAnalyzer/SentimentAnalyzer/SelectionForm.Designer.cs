@@ -122,6 +122,7 @@
             this.ClientSize = new System.Drawing.Size(1694, 958);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.errorInfoLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "SelectionForm";
             this.Text = "Re:Review-Home";

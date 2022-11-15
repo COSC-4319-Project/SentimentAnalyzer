@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>image_2022-11-11_165327069.ico</ApplicationIcon>
+    <ApplicationIcon>Re_reviewLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="image_2022-11-11_165327069.ico" />
+    <Content Include="Re_reviewLogo.ico" />
     <Content Include="Scraper\amazon.py" />
     <None Include="Resources\ReReviewLogo%286%291.png" />
     <None Include="Resources\ReReviewLogo%282%293.png" />
