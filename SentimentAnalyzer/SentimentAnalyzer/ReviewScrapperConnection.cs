@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Newtonsoft.Json;
 using System.Diagnostics;
 
 //Using Newtonsoft Json.NET for json parsing
@@ -13,6 +12,7 @@ namespace SentimentAnalyzer
 {
     class ReviewScrapperConnection
     {
+        public static string appPath;
         //static List<Review> reviews;
         private static List<Review> LoadReviewsFromJSON(string asin)
         {
@@ -48,13 +48,9 @@ namespace SentimentAnalyzer
 
             // full path of python interpreter 
             string python =  GetPythonPath() + @"\Python311\python.exe";
-
+            Console.WriteLine(python);
             // python app to call 
             string myPythonApp = "amazon.py";
-
-            // dummy parameters to send Python script 
-            int x = 2;
-            int y = 5;
 
             // Create new process start info 
             ProcessStartInfo myProcessStartInfo = new ProcessStartInfo(python);
@@ -62,18 +58,18 @@ namespace SentimentAnalyzer
             // make sure we can read the output from stdout 
             myProcessStartInfo.UseShellExecute = true;
             //myProcessStartInfo.RedirectStandardOutput = true;
-
-            // start python app with 3 arguments  
-            // 1st arguments is pointer to itself,  
-            // 2nd and 3rd are actual arguments we want to send 
+            
+            // start python app with a argument pointing to itself 
             myProcessStartInfo.Arguments = myPythonApp;
 
             Process myProcess = new Process();
             // assign start information to the process 
             myProcess.StartInfo = myProcessStartInfo;
-
+            Console.WriteLine(myProcess.StartInfo.FileName);
+            Console.WriteLine(myProcess.StartInfo.WorkingDirectory);
             //Console.WriteLine("Calling Python script with arguments {0} and {1}", x, y);
-            // start the process 
+            // start the process
+           
             myProcess.Start();
 
             // Read the standard output of the app we called.  

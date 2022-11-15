@@ -19,13 +19,14 @@ namespace SentimentAnalyzer
         static void Main()
         {   
             Client.InitializeClient();
+            ReviewScrapperConnection.appPath = Application.StartupPath;
             Lexicon.LoadLexicon(Application.StartupPath);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             selectionForm = new SelectionForm();
-            Application.Run(selectionForm);
-            //Application.Run(new LoginForm());
+            //Application.Run(selectionForm); //Used to bypass login for testing
+            Application.Run(new LoginForm());
 
             if (Client.loggedin)
             {

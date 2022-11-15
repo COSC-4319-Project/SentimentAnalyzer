@@ -42,10 +42,11 @@ namespace SentimentAnalyzer
             }
             ResultsText.Text = text;
 
-            negWordCount.Text = String.Format("Value: {0:P2}.", negPerc);
-            posWordCount.Text = String.Format("Value: {0:P2}.", posPerc);
-            neutralWordCount.Text = String.Format("Value: {0:P2}.", neuPerc);
+            negWordCount.Text = string.Format("Value: {0:P2}.", negPerc);
+            posWordCount.Text = string.Format("Value: {0:P2}.", posPerc);
+            neutralWordCount.Text = string.Format("Value: {0:P2}.", neuPerc);
             wordCountRes.Text = wordCount.ToString();
+            confidenceResult.Text = string.Format("Value: {0:P2}.", confidence);
 
         }
 

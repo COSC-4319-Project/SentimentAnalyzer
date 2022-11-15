@@ -65,6 +65,11 @@ namespace SentimentAnalyzer
             return "";
         }
 
+        public static float Clamp(float value, float min, float max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
+
         //Regex for client side input validation.
         public static Regex ValidateUsername = new Regex("^[a-zA-Z0-9]+$");
         public static Regex ValidatePassword = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");

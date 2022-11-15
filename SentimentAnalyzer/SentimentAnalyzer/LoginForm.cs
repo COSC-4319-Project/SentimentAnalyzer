@@ -20,7 +20,7 @@ namespace SentimentAnalyzer
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            if (guestCheckBox.Checked)
+            if (checkBox1.Checked)
             {
                 Client.GuestLogin();
                 Close();
@@ -44,26 +44,31 @@ namespace SentimentAnalyzer
             new SignUpForm().ShowDialog();
         }
 
-        private void guestCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            PasswordBox.Enabled = !guestCheckBox.Checked;
-            UsernameBox.Enabled = !guestCheckBox.Checked;
-            createAcctButt.Enabled = !guestCheckBox.Checked;
+            new ResetPassword().ShowDialog();
+        }
 
-            if (guestCheckBox.Checked)
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            PasswordBox.Enabled = !checkBox1.Checked;
+            UsernameBox.Enabled = !checkBox1.Checked;
+            createAcctButt.Enabled = !checkBox1.Checked;
+
+            if (checkBox1.Checked)
             {
                 UsernameBox.Text = "Guest";
             }
             else
-            { 
+            {
                 UsernameBox.Text = "";
 
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            new ResetPassword().ShowDialog();
         }
     }
 }

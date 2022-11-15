@@ -59,8 +59,8 @@ namespace SentimentAnalyzer
             posPerc = (float)paragraph.posWords / (float)paragraph.wordCount;
             neuPerc = ((float)paragraph.wordCount - (float)paragraph.negWords - (float)paragraph.posWords) / (float)paragraph.wordCount;
             wordCount = paragraph.wordCount;
-            confidence = (float)(paragraph.posWords + paragraph.negWords) / (float)paragraph.wordCount;
-            confidence *= 7;
+            confidence = (float)(paragraph.posWords + paragraph.negWords) * 7 / (float)paragraph.wordCount;
+            confidence = Utilites.Clamp(confidence, 0, 1); //Curtail overconfidence 
             //Debug Outputs
             //Console.WriteLine("Neg %:" + negPerc);
             //Console.WriteLine("Neu %:" + neuPerc);
