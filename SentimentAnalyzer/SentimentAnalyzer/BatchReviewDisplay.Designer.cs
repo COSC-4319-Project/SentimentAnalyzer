@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BatchReviewDisplay));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.modifiedStarRatingRes = new System.Windows.Forms.Label();
             this.avgConRes = new System.Windows.Forms.Label();
@@ -71,7 +72,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(535, 43);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(198, 314);
+            this.groupBox1.Size = new System.Drawing.Size(280, 314);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Analysis Results";
@@ -79,9 +80,10 @@
             // modifiedStarRatingRes
             // 
             this.modifiedStarRatingRes.AutoSize = true;
+            this.modifiedStarRatingRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.modifiedStarRatingRes.Location = new System.Drawing.Point(137, 110);
             this.modifiedStarRatingRes.Name = "modifiedStarRatingRes";
-            this.modifiedStarRatingRes.Size = new System.Drawing.Size(13, 13);
+            this.modifiedStarRatingRes.Size = new System.Drawing.Size(14, 13);
             this.modifiedStarRatingRes.TabIndex = 13;
             this.modifiedStarRatingRes.Text = "0";
             // 
@@ -124,10 +126,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(6, 110);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 14);
+            this.label5.Size = new System.Drawing.Size(145, 14);
             this.label5.TabIndex = 8;
             this.label5.Text = "Modified Star Rating:";
             // 
@@ -188,7 +190,7 @@
             // 
             this.productName.AutoSize = true;
             this.productName.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productName.Location = new System.Drawing.Point(11, 196);
+            this.productName.Location = new System.Drawing.Point(11, 262);
             this.productName.Name = "productName";
             this.productName.Size = new System.Drawing.Size(99, 14);
             this.productName.TabIndex = 3;
@@ -197,10 +199,10 @@
             // originalStarVal
             // 
             this.originalStarVal.AutoSize = true;
-            this.originalStarVal.Font = new System.Drawing.Font("Georgia", 7.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.originalStarVal.Location = new System.Drawing.Point(11, 221);
+            this.originalStarVal.Font = new System.Drawing.Font("Georgia", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.originalStarVal.Location = new System.Drawing.Point(11, 287);
             this.originalStarVal.Name = "originalStarVal";
-            this.originalStarVal.Size = new System.Drawing.Size(92, 14);
+            this.originalStarVal.Size = new System.Drawing.Size(103, 15);
             this.originalStarVal.TabIndex = 2;
             this.originalStarVal.Text = "0 out of 5 stars";
             // 
@@ -209,8 +211,8 @@
             this.pictureBox1.Image = global::SentimentAnalyzer.Properties.Resources.placeholderProductImage;
             this.pictureBox1.Location = new System.Drawing.Point(12, 21);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(167, 161);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.Size = new System.Drawing.Size(248, 227);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -287,7 +289,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PeachPuff;
-            this.ClientSize = new System.Drawing.Size(846, 462);
+            this.ClientSize = new System.Drawing.Size(872, 462);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.analyzeButton);
             this.Controls.Add(this.textBox1);
@@ -295,8 +297,9 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BatchReviewDisplay";
-            this.Text = "Re:Review-Amazon Review";
+            this.Text = "Re:Review Amazon Review";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
