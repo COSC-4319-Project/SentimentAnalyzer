@@ -41,10 +41,7 @@ class Reviews:
 
     def next_page(self, page):                            #cycle through pages by adding page number I want to self.url
         r = self.pagedata.get(self.url + str(page))
-        if not r.html.find('div[data-hook=review]'):      
-            return False
-        else:
-            return r.html.find('div[data-hook=review]')   #grab a page of review data and return it
+        return r.html.find('div[data-hook=review]')   #grab a page of review data and return it
             
     
     def get_pages(self):                           #This gets # of reviews, formats the text, and turns it into number of review pages for pagination
@@ -57,6 +54,8 @@ class Reviews:
         pages = (int(num_rev) // 10) + 1                               # 10 reviews / page
         if int(num_rev) % 10 > 0:                                      # grab the reviews past base 10
             pages = pages + 1
+        if pages == 1:
+            print('This item has no reviews.')
         return pages                       
 
     def get_image(self, url):
@@ -76,23 +75,29 @@ class Reviews:
        
     def get_reviews(self, reviews):  # collects data from reviews, and appends them to total
         total = []
-        try:
-            for review in reviews:
+        
+        for review in reviews:
+            try:
                 title = review.find('a[data-hook=review-title]', first=True).text
+            except AttributeError:
+                title = None
+            try:
                 rating = review.find('i[data-hook=review-star-rating] span', first=True).text
+            except AttributeError:
+                rating = None
+            try:
                 body = review.find('span[data-hook=review-body] span', first=True).text.replace('\n','').strip()  # exchange newlines with a space
+            except AttributeError:
+                body = None
 
-            data = {                                             # dictionary formating the data with title hooks for the analyzer to link to
+            data = {                                             # dictionary formatting the data with title hooks for the analyzer to link to
                 "title": title,
                 'rating': rating,
                 'body': body
             }
 
             total.append(data)
-                
-        except:
-            pass
-
+               
         return total
 
 
@@ -127,15 +132,15 @@ if __name__ == '__main__':
 
     for x in range(1, pages):      # pagination
         print('getting page ', x)
-        time.sleep(0.1)             # a pause to slow us down, ensuring more consistent results
+        time.sleep(0.2)             # a pause to slow us down, ensuring more consistent results
         reviews = amz_rvw.next_page(x)
-        if reviews is not False:
+        if reviews is not None:
             results.append(amz_rvw.get_reviews(reviews))   #collecting reviews
         else:
-            print('no more pages')
-            break
+            pass
 
-    #print(results)
+    print(results)
+
 
     amz_rvw.save_reviews(results)       #saving collected reviews to JSON
 
