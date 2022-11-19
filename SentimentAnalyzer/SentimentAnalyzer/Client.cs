@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SentimentAnalyzer
 {
@@ -13,9 +15,9 @@ namespace SentimentAnalyzer
     {
         public static string serverIP = "127.0.0.1";
         public static int port = 25555;
-        private static NetworkStream msgStream = null;
-        private static TcpClient tcpClient;
 
+        private static TcpClient tcpClient;
+        private static SslStream sslStream;
         public static User currentUser;
         public static bool loggedin = false;
         public static bool offlineMode = false;
@@ -29,18 +31,32 @@ namespace SentimentAnalyzer
 
             try //Try catch to handle when client is unable to connect
             {
-                InitializeClient();
-                tcpClient.Connect(serverIP, port);
+                //InitializeClient();
+                //tcpClient.Connect(serverIP, port);
+                tcpClient = new TcpClient("127.0.0.1", 5300);
                 Console.WriteLine("Connected");
+                NetworkStream stream = tcpClient.GetStream();
+
+                //Wrap stream with cert call back to allow cert
+                sslStream = new SslStream(stream, false, new RemoteCertificateValidationCallback(CertificateValidationCallback));
+                sslStream.AuthenticateAsClient("clientName");
+
                 return true;
             }
-            catch (SocketException)
+            catch (Exception)
             {
                 Console.WriteLine("[ERROR]Connection Failed");
                 return false;
             }
+
         }
-        
+
+        //Callback function that allows all certificates
+        static bool CertificateValidationCallback(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
         public static void GuestLogin() //Guest login, ID = -1 means offline.
         {
             loggedin = offlineMode = true;
@@ -49,15 +65,16 @@ namespace SentimentAnalyzer
 
         public static List<string> GetLexicon(int lexNum)
         {
+            Connect();
             if (!Connect())
             {
                 return null;
             }
-            
+
             SendMessage("LEX|REQ|" + lexNum);
             int length = int.Parse(ReciveMessage()); //Get length of lexicon
             Console.WriteLine(length);
-            string lex = ReciveMessage(length);
+            string lex = ReciveMessage(8192);
             tcpClient.Close();
             
             return new List<string>(Utilites.SplitToLines(lex));
@@ -93,7 +110,7 @@ namespace SentimentAnalyzer
             }
             //Hash user entered password with provided salt
             string saltedPassword = LoginUtility.HashFromSalt(password, salt);
-
+            tcpClient.Close();
             Connect();
 
             //Send salted pasword and username to server
@@ -121,7 +138,8 @@ namespace SentimentAnalyzer
         //ACT|userName|password|name - create account message
         public static bool CreateAccount(string username, string password, string name)
         {
-            if (!Connect()) //Attempt connection
+            Connect();
+            if (!Connect())
             {
                 return false;
             }
@@ -260,33 +278,37 @@ namespace SentimentAnalyzer
 
         static void SendMessage(string message)
         {
+            message = "@" + message; //First character is split into another message for some reason in SSL
             byte[] buffer = Encoding.ASCII.GetBytes(message); //Encode string to byte array to be sent
-            tcpClient.GetStream().Write(buffer, 0, buffer.Length); //sends byte array to client
+            sslStream.Write(buffer, 0, buffer.Length); //sends byte array to client
         }
         static void SendMessageUTF8(string message)
         {
+            message = "@" + message; //First character is split into another message for some reason in SSL
             byte[] buffer = Encoding.UTF8.GetBytes(message); //Encode string to byte array to be sent
-            tcpClient.GetStream().Write(buffer, 0, buffer.Length); //sends byte array to client
+            sslStream.Write(buffer, 0, buffer.Length); //sends byte array to client
         }
         static string ReciveMessage(int bufferSize)
         {
             byte[] buffer = new byte[bufferSize];
-            int i = tcpClient.Client.Receive(buffer);
-            return System.Text.Encoding.ASCII.GetString(buffer,0,i);
+            int i = sslStream.Read(buffer,0,bufferSize);
+            i = sslStream.Read(buffer, 0, bufferSize);
+            return Encoding.ASCII.GetString(buffer,0,i);
         }
         static string ReciveMessage()
         {
-            return ReciveMessage(2048);
+            return ReciveMessage(8192);
         }
         static string ReciveMessageUTF8(int bufferSize)
         {
             byte[] buffer = new byte[bufferSize];
-            int i = tcpClient.Client.Receive(buffer);
-            return System.Text.Encoding.UTF8.GetString(buffer, 0, i);
+            int i = sslStream.Read(buffer, 0, bufferSize);
+            i = sslStream.Read(buffer, 0, bufferSize);
+            return Encoding.UTF8.GetString(buffer, 0, i);
         }
         static string ReciveMessageUTF8()
         {
-            return ReciveMessageUTF8(2048);
+            return ReciveMessageUTF8(8192);
         }
     }
     public struct User
