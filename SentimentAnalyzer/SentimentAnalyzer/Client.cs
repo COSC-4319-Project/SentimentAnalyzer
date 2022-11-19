@@ -78,14 +78,32 @@ namespace SentimentAnalyzer
 
         public static bool AttemptLogin(string username, string password)
         {
+            //Attempt connection
             if (!Connect())
             {
                 return false;
             }
-            SendMessage("LGN|" + username + "|" + password);
+            //Request salt from server for user
+            SendMessage("SLT|" + username);
+            string salt = ReciveMessage();
+
+            if (salt == "INVALID") //Check we recived a valid salt
+            {
+                return false;
+            }
+            //Hash user entered password with provided salt
+            string saltedPassword = LoginUtility.HashFromSalt(password, salt);
+
+            Connect();
+
+            //Send salted pasword and username to server
+            SendMessage("LGN|" + username + "|" + saltedPassword);
+
+            //Recive server's resoponse
             string response = ReciveMessage();
             string[] splitRes = response.Split('|');
-            tcpClient.Close();
+
+            tcpClient.Close(); //Close connection
 
             if (splitRes.Length > 1) //valid response
             {
@@ -100,13 +118,15 @@ namespace SentimentAnalyzer
 
         }
 
+        //ACT|userName|password|name - create account message
         public static bool CreateAccount(string username, string password, string name)
         {
-            if (!Connect())
+            if (!Connect()) //Attempt connection
             {
                 return false;
             }
-            SendMessage(string.Format("ACT|{0}|{1}|{2}", username, password, name));
+
+            SendMessage(string.Format("ACT|{0}|{1}|{2}", username, LoginUtility.SaltedHash(password), LoginUtility.SaltedHash(name)));
             Console.WriteLine("messageSent");
 
             if (ReciveMessage() == "VALID")
@@ -121,13 +141,25 @@ namespace SentimentAnalyzer
             }
         }
 
-        public static bool UpdateAccount(string username, string oldPassowrd, string newPassword)
+        public static bool UpdateAccount(string username, string oldPassword, string newPassword)
         {
-            if (!Connect())
+            if (!Connect()) //attempt connection to server
             {
                 return false;
             }
-            SendMessage(string.Format("UAP|{0}|{1}|{2}", username, oldPassowrd, newPassword));
+
+            //Request salt from server for user
+            SendMessage("SLT|" + username);
+            string salt = ReciveMessage();
+
+            if (salt == "INVALID") //Check we recived a valid salt
+            {
+                return false;
+            }
+            //Hash current passsword
+            string hashPassword = LoginUtility.HashFromSalt(oldPassword, salt);
+
+            SendMessage(string.Format("UAP|{0}|{1}|{2}", username, hashPassword, LoginUtility.SaltedHash(newPassword)));
             string response = ReciveMessage();
             tcpClient.Close();
 
@@ -141,13 +173,13 @@ namespace SentimentAnalyzer
             }
         }
 
-        public static bool RequestPasswordToken(string username)
+        public static bool RequestPasswordToken(string username, string email)
         {
             if (!Connect())
             {
                 return false;
             }
-            SendMessage(string.Format(("ACT|RST|REQ|{0}"), username));
+            SendMessage(string.Format(("ACT|RST|REQ|{0}|{1}"), username, email));
             string response = ReciveMessage();
             tcpClient.Close();
 
@@ -167,7 +199,7 @@ namespace SentimentAnalyzer
             {
                 return false;
             }
-            SendMessage(string.Format(("ACT|RST|{0}|{1}|{2}"), username, token, newPassword));
+            SendMessage(string.Format(("ACT|RST|{0}|{1}|{2}"), username, token, LoginUtility.SaltedHash(newPassword)));
             string response = ReciveMessage();
             tcpClient.Close();
 

@@ -55,6 +55,7 @@
     <Compile Include="BatchReviewDisplay.Designer.cs">
       <DependentUpon>BatchReviewDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoginUtility.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

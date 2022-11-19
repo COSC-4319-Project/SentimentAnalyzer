@@ -30,7 +30,7 @@ namespace SentimentAnalyzer
                 return;
             }
 
-            if (Client.RequestPasswordToken(userNameBox1.Text))
+            if (Client.RequestPasswordToken(userNameBox1.Text, emailBox.Text))
             {
                 MessageBox.Show("Token sent to email (check junk if you cannot find message)");
                 usernameBox2.Text = userNameBox1.Text;

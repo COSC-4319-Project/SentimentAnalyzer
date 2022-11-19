@@ -29,9 +29,13 @@ namespace SentimentAnalyzer
 
         public static string HashFromSalt(string plainText, string strSalt)
         {
+            if (strSalt == "INVALID")
+            {
+                return "INVALID";
+            }
+
             //Convert salt
             byte[] salt = Convert.FromBase64String(strSalt);
-            new RNGCryptoServiceProvider().GetBytes(salt);
 
             //Create Bytes of hash value
             var pbkdf2 = new Rfc2898DeriveBytes(plainText, salt, 100000);
@@ -43,6 +47,13 @@ namespace SentimentAnalyzer
             Array.Copy(hash, 0, hashBytes, 16, 20);
             //Convert to string
             return Convert.ToBase64String(hashBytes);
+        }
+
+        public static string GetNewSalt()
+        {
+            byte[] salt = new byte[16];
+            new RNGCryptoServiceProvider().GetBytes(salt);
+            return Convert.ToBase64String(salt);
         }
     }
 }
