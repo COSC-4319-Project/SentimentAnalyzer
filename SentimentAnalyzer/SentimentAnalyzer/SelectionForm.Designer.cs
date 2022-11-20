@@ -34,7 +34,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.batchButton = new System.Windows.Forms.Button();
             this.singleReviewButton = new System.Windows.Forms.Button();
-            this.historyButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -54,7 +53,6 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.batchButton);
             this.panel1.Controls.Add(this.singleReviewButton);
-            this.panel1.Controls.Add(this.historyButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -103,22 +101,6 @@
             this.singleReviewButton.UseVisualStyleBackColor = false;
             this.singleReviewButton.Click += new System.EventHandler(this.singleReviewButton_Click);
             // 
-            // historyButton
-            // 
-            this.historyButton.BackColor = System.Drawing.Color.SkyBlue;
-            this.historyButton.Enabled = false;
-            this.historyButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.historyButton.Image = global::SentimentAnalyzer.Properties.Resources._126586_read_book_icon;
-            this.historyButton.Location = new System.Drawing.Point(6, 563);
-            this.historyButton.Margin = new System.Windows.Forms.Padding(6);
-            this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(342, 135);
-            this.historyButton.TabIndex = 2;
-            this.historyButton.Text = "   Review History";
-            this.historyButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.historyButton.UseVisualStyleBackColor = false;
-            this.historyButton.Click += new System.EventHandler(this.historyButton_Click);
-            // 
             // SelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -143,7 +125,6 @@
 
         private System.Windows.Forms.Button batchButton;
         private System.Windows.Forms.Button singleReviewButton;
-        private System.Windows.Forms.Button historyButton;
         private System.Windows.Forms.Label errorInfoLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
