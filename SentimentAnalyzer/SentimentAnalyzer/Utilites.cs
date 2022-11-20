@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SentimentAnalyzer
 {
-    static class Utilites
+    static class Utilites //Program utilties (assorted functions that didn't fit in other classes)
     {
         //thanks to Steve Cooper - https://stackoverflow.com/questions/1547476/easiest-way-to-split-a-string-on-newlines-in-net
         
@@ -65,6 +65,7 @@ namespace SentimentAnalyzer
             return "";
         }
 
+        //Float Clamp function.
         public static float Clamp(float value, float min, float max)
         {
             return (value < min) ? min : (value > max) ? max : value;

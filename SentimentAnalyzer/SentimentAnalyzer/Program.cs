@@ -18,15 +18,17 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {   
-            Client.InitializeClient();
-            ReviewScrapperConnection.appPath = Application.StartupPath;
-            Lexicon.LoadLexicon(Application.StartupPath);
+
+            Client.InitializeClient(); //Initilize Network objects on client
+            Lexicon.LoadLexicon(Application.StartupPath); //Load lexicon data
+
+            //Default calls for windows forms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            selectionForm = new SelectionForm();
+            selectionForm = new SelectionForm();// Get refrence to selection form
             //Application.Run(selectionForm); //Used to bypass login for testing
-            Application.Run(new LoginForm());
+            Application.Run(new LoginForm());//Run login form
 
             if (Client.loggedin)
             {

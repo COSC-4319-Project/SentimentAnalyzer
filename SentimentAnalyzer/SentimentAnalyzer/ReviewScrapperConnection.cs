@@ -12,7 +12,6 @@ namespace SentimentAnalyzer
 {
     class ReviewScrapperConnection
     {
-        public static string appPath;
         //static List<Review> reviews;
         private static List<Review> LoadReviewsFromJSON(string asin)
         {
@@ -23,12 +22,17 @@ namespace SentimentAnalyzer
             char[] delimeters = { '{', '}' };
 
             string[] split = json.Split(delimeters);
+
             //Every other line is garbage so increment by 2
             for (int i = 1; i < split.Length; i += 2)
             {
+                //Console.WriteLine(split[i]);
                 string[] rec = split[i].Split('"');
-                reviews.Add(new Review(rec[5], rec[7], rec[11]));
-                //Console.WriteLine(rec.Length);
+                if (rec.Length >= 13)
+                {
+                    //Console.WriteLine("REC LENGTH : " + rec.Length);
+                    reviews.Add(new Review(rec[5], rec[7], rec[11]));
+                }
             }
 
             return reviews;
@@ -71,15 +75,6 @@ namespace SentimentAnalyzer
             // start the process
            
             myProcess.Start();
-
-            // Read the standard output of the app we called.  
-            // in order to avoid deadlock we will read output first 
-            // and then wait for process terminate: 
-            //StreamReader myStreamReader = myProcess.StandardOutput;
-            //string myString = myStreamReader.ReadLine();
-
-            /*if you need to read multiple lines, you might use: 
-                string myString = myStreamReader.ReadToEnd() */
 
             // wait exit signal from the app we called and then close it. 
             myProcess.WaitForExit();

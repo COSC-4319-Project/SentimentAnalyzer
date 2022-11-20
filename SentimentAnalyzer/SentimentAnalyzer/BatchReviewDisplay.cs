@@ -78,6 +78,20 @@ namespace SentimentAnalyzer
                 List<Review> reviews = ReviewScrapperConnection.GetReviews(url);
                 //analyze scrapped reviews to get results
                 modRating = Sentiment.BatchAnalyze(reviews, out totalRev, out posRev, out NegRev, out avgCon, out origRating);
+
+                //Try and cache image
+                try
+                {
+                    Console.WriteLine("Caching Image");
+                    System.IO.File.Copy("user_img.jpg", asin + ".jpg");
+                    pictureBox1.Image = Image.FromFile(asin + ".jpg");
+
+                }
+                catch
+                {
+                    Console.WriteLine("Error: Image already cached");
+                }
+
                 try
                 {
                     pictureBox1.Image = Image.FromFile("user_img.jpg"); //Load scrapped image
@@ -95,28 +109,18 @@ namespace SentimentAnalyzer
                     Client.SendReviewHistory(rec);
                 }
             }
-            Random random = new Random(rec.numRev);
+            //Random random = new Random(rec.numRev);
             //Set analyzed values on UI
+            // * 10 + random.Next(0,10)
             productName.Text = prodName;
             modifiedStarRatingRes.Text = string.Format("{0} out of 5 stars", modRating);
-            numReviewsRes.Text = (totalRev * 10 + random.Next(0,10)).ToString();
-            numPosReviewsRes.Text = (posRev * 10 + random.Next(0, 10)).ToString();
-            numNegativeReviewRes.Text = (NegRev * 10 + random.Next(0, 10)).ToString();
+            numReviewsRes.Text = (totalRev).ToString();
+            numPosReviewsRes.Text = (posRev).ToString();
+            numNegativeReviewRes.Text = (NegRev).ToString();
             avgConRes.Text = string.Format("Value: {0:P2}.", avgCon);
             originalStarVal.Text = string.Format("{0} out of 5 stars", origRating);
 
-            //Try and cache image
-            try
-            {
-                Console.WriteLine("Caching Image");
-                System.IO.File.Copy("user_img.jpg", asin + ".jpg");
-                pictureBox1.Image = Image.FromFile(asin + ".jpg");
 
-            }
-            catch
-            {
-                Console.WriteLine("Error: Image already cached");
-            }
         }
 
         private void homeButton_Click(object sender, EventArgs e)
