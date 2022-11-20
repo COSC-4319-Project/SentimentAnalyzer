@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectionForm));
             this.errorInfoLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -56,7 +57,7 @@
             this.panel1.Controls.Add(this.historyButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(446, 888);
             this.panel1.TabIndex = 4;
@@ -65,7 +66,7 @@
             // 
             this.pictureBox1.Image = global::SentimentAnalyzer.Properties.Resources.ReReviewLogo_6_1;
             this.pictureBox1.Location = new System.Drawing.Point(6, 6);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(378, 223);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -78,7 +79,7 @@
             this.batchButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.batchButton.Image = global::SentimentAnalyzer.Properties.Resources._126577_search_find_icon;
             this.batchButton.Location = new System.Drawing.Point(6, 246);
-            this.batchButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.batchButton.Margin = new System.Windows.Forms.Padding(6);
             this.batchButton.Name = "batchButton";
             this.batchButton.Size = new System.Drawing.Size(342, 135);
             this.batchButton.TabIndex = 0;
@@ -93,7 +94,7 @@
             this.singleReviewButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.singleReviewButton.Image = global::SentimentAnalyzer.Properties.Resources._126582_edit_pencil_write_icon;
             this.singleReviewButton.Location = new System.Drawing.Point(6, 404);
-            this.singleReviewButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.singleReviewButton.Margin = new System.Windows.Forms.Padding(6);
             this.singleReviewButton.Name = "singleReviewButton";
             this.singleReviewButton.Size = new System.Drawing.Size(342, 135);
             this.singleReviewButton.TabIndex = 1;
@@ -109,7 +110,7 @@
             this.historyButton.Font = new System.Drawing.Font("Georgia", 10.125F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.historyButton.Image = global::SentimentAnalyzer.Properties.Resources._126586_read_book_icon;
             this.historyButton.Location = new System.Drawing.Point(6, 563);
-            this.historyButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.historyButton.Margin = new System.Windows.Forms.Padding(6);
             this.historyButton.Name = "historyButton";
             this.historyButton.Size = new System.Drawing.Size(342, 135);
             this.historyButton.TabIndex = 2;
@@ -127,7 +128,8 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.errorInfoLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "SelectionForm";
             this.Text = "Re:Review-Home";
             this.panel1.ResumeLayout(false);
