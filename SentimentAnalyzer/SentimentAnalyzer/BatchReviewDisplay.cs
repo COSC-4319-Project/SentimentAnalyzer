@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SentimentAnalyzer
@@ -109,9 +104,8 @@ namespace SentimentAnalyzer
                     Client.SendReviewHistory(rec);
                 }
             }
-            //Random random = new Random(rec.numRev);
+
             //Set analyzed values on UI
-            // * 10 + random.Next(0,10)
             productName.Text = prodName;
             modifiedStarRatingRes.Text = string.Format("{0} out of 5 stars", modRating);
             numReviewsRes.Text = (totalRev).ToString();

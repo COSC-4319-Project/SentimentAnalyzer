@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SentimentAnalyzer
 {
-    class LoginUtility
+    class LoginUtility //Functions ported from server (Login.cs) Handles hashing of passwords on client side
     {
-        public static string SaltedHash(string plainText)
+        public static string SaltedHash(string plainText) //Hash password with new salt
         {
             //Create a salt
             byte[] salt = new byte[16];
@@ -27,7 +27,7 @@ namespace SentimentAnalyzer
             return Convert.ToBase64String(hashBytes);
         }
 
-        public static string HashFromSalt(string plainText, string strSalt)
+        public static string HashFromSalt(string plainText, string strSalt) //Hash password from provided salt
         {
             if (strSalt == "INVALID")
             {
@@ -47,13 +47,6 @@ namespace SentimentAnalyzer
             Array.Copy(hash, 0, hashBytes, 16, 20);
             //Convert to string
             return Convert.ToBase64String(hashBytes);
-        }
-
-        public static string GetNewSalt()
-        {
-            byte[] salt = new byte[16];
-            new RNGCryptoServiceProvider().GetBytes(salt);
-            return Convert.ToBase64String(salt);
         }
     }
 }

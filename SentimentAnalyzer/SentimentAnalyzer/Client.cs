@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using System.Net.Sockets;
-using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
@@ -13,18 +9,25 @@ namespace SentimentAnalyzer
 {
     class Client
     {
+        //IP information
         public static string serverIP = "127.0.0.1";
         public static int port = 25555;
 
+        //Network objects
         private static TcpClient tcpClient;
         private static SslStream sslStream;
+
+        //Data for current logged on user
         public static User currentUser;
         public static bool loggedin = false;
-        public static bool offlineMode = false;
+        public static bool offlineMode = false; //Flag to disable network features.
+
+
         public static void InitializeClient()
         {
             tcpClient = new TcpClient();
         }
+
         private static bool Connect()
         {
             Console.WriteLine("Connecting to: " + serverIP + ":" + port);
@@ -63,31 +66,29 @@ namespace SentimentAnalyzer
             currentUser = new User("Guest", "", -1, "guest");
         }
 
-        public static List<string> GetLexicon(int lexNum)
+        public static List<string> GetLexicon(int lexNum) //Gets lexicon from server (for updates)
         {
-            Connect();
-            if (!Connect())
+            if (!Connect()) //Try Connect
             {
                 return null;
             }
 
-            SendMessage("LEX|REQ|" + lexNum);
-            int length = int.Parse(ReciveMessage()); //Get length of lexicon
-            Console.WriteLine(length);
-            string lex = ReciveMessage(8192);
+            SendMessage("LEX|REQ|" + lexNum); //send Lexicon request message
+            int length = int.Parse(ReciveMessage()); //Server sends length of lexicon
+            string lex = ReciveMessage(8192); //Server sends lexicon.
             tcpClient.Close();
             
-            return new List<string>(Utilites.SplitToLines(lex));
+            return new List<string>(Utilites.SplitToLines(lex)); //Return list split along newline characters
         }
 
-        public static int GetLexiconVersion(int lexNum)
+        public static int GetLexiconVersion(int lexNum) //Gets most recent lexicon version from server
         {
             if (!Connect())
             {
                 return -1;
             }
-            SendMessage("LEX|VER|" + lexNum);
-            int ver = int.Parse(ReciveMessage()); //Get length of lexicon
+            SendMessage("LEX|VER|" + lexNum); //Lex Version message
+            int ver = int.Parse(ReciveMessage()); //Server sends version back
             tcpClient.Close();
             return ver;
 

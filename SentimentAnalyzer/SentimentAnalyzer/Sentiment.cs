@@ -2,20 +2,14 @@
 //Software Engineering 4319
 //Based of research and lexicon by Hu and Liu, KDD-2004, https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SentimentAnalyzer
 {
     class Sentiment //Used to try and determine the sentiment of a piece of english text
     {
         public static char[] delemiterCharsSents = {'.','?','!'}; //Used to split senteces (Ending puntuation)
-        public static char[] delemiterCharsWords = { ' ', ',', ';'};
-
-        const int negationSteps = 2; //Number of steps forward and backward.
+        public static char[] delemiterCharsWords = { ' ', ',', ';'}; //Used to remove puntuation from the end of words
 
         public static float BatchAnalyze(List<Review> reviews, out int totalParagraphs, out int posParagraphs, out int negParagraphs, out float avgConfidence, out float origRating)
         {
@@ -45,40 +39,40 @@ namespace SentimentAnalyzer
 
                 avgConfidence += confidence;
             }
+            //Compute confidence and ratings
             avgConfidence = avgConfidence / (float)totalParagraphs;
             origRating = origRating / (float)totalParagraphs;
-
+            //Return modified ratings
             return ((float)posParagraphs/(float)totalParagraphs * 5);
             
         }
-
+        
+        //Analyze a piece of text and out intermediate calculations
         public static int Analyze(string text, out float negPerc, out float neuPerc, out float posPerc, out int wordCount, out float confidence) //Entry point for sentiment class
         {
-            Paragraph paragraph = Tokenize(text);
+            Paragraph paragraph = Tokenize(text); //Tag words
+            //Compute percentages;
             negPerc = (float)paragraph.negWords / (float)paragraph.wordCount;
             posPerc = (float)paragraph.posWords / (float)paragraph.wordCount;
             neuPerc = ((float)paragraph.wordCount - (float)paragraph.negWords - (float)paragraph.posWords) / (float)paragraph.wordCount;
+            //Grab word count for output;
             wordCount = paragraph.wordCount;
+            //Compute confidence level
             confidence = (float)(paragraph.posWords + paragraph.negWords) * 7 / (float)paragraph.wordCount;
             confidence = Utilites.Clamp(confidence, 0, 1); //Curtail overconfidence 
-            //Debug Outputs
-            //Console.WriteLine("Neg %:" + negPerc);
-            //Console.WriteLine("Neu %:" + neuPerc);
-            //Console.WriteLine("Pos %:" + posPerc);
-            //Console.WriteLine("Word cnt:" + paragraph.wordCount);
-            //Console.WriteLine("posWord cnt:" + paragraph.posWords);
-            //Console.WriteLine("negWord cnt:" + paragraph.negWords);
 
+            //Return sentiment value
             if (negPerc > posPerc)
             {
-                return -1;
+                return -1; //Negative
             }
             else if (negPerc < posPerc)
             {
-                return 1;
+                return 1; //Positive
             }
-            return 0; 
+            return 0;  //Neutral
         }
+
         public static int Analyze(string text, out float confidence) //Calls analyze without additonal info
         {
             int count;
@@ -87,23 +81,19 @@ namespace SentimentAnalyzer
         }
 
         //Idea is to break the sentence up into analyzable tagged chunks
-        static Paragraph Tokenize(string text)
+        static Paragraph Tokenize(string text) //Build paragraph data structure from review text
         {
-            text = text.ToLower(); //Set string data to lower case
-            Paragraph paragraph = new Paragraph();
-            paragraph.sentences = new List<Sentence>();
-            //Console.WriteLine("Pre Tokenize:");
-            //Console.WriteLine(text);
-            //Console.WriteLine("Tokenize:");
+            text = text.ToLower(); //Set string data to lower case to match lexicons
+            Paragraph paragraph = new Paragraph(); //Create new paragraph.
+            paragraph.sentences = new List<Sentence>(); //Assign sentence list
 
             foreach (string sent in text.Split(delemiterCharsSents)) //Split sentences
             {
-                //Console.WriteLine("Sent:" + sent);
-                Sentence sentence = new Sentence();
-                sentence.words = new List<TaggedWord>();
+                Sentence sentence = new Sentence(); //assign sentence list
+                sentence.words = new List<TaggedWord>(); //assign tagged word list
                 bool negate = false; //flag to swap rest of sentence.
                 int weight = 1; //weight of words in sentence
-                Tag lastTag = Tag.ignore; //Last sentiment tag of sentence for vauge words.
+                Tag lastTag = Tag.ignore; //Last used sentiment tag of sentence for vauge words.(only positive or negative)
 
                 foreach (string word in sent.Split(delemiterCharsWords))//Split words
                 {
@@ -112,16 +102,16 @@ namespace SentimentAnalyzer
                         continue; //Skip to next item
                     }
 
-                    TaggedWord aWord = TagWord(word);
-                    paragraph.wordCount++;
+                    TaggedWord aWord = TagWord(word);//Get tag for word
+                    paragraph.wordCount++; //Increment word count
 
-                    //if (negsteps > 0)
+                    //Based on sentiment update sentence and paragraph values
                     if (negate)
                     {
                         //negsteps--;
                         aWord.tag = InvertTag(aWord.tag);
                     }
-                    if (aWord.tag == Tag.negation) //set flag tp negate proceding words 
+                    if (aWord.tag == Tag.negation) //set flag to negate proceding words 
                     {
                         negate = true;
                     }
@@ -129,12 +119,12 @@ namespace SentimentAnalyzer
                     {
                         weight = 2;
                     }
-                    else if (aWord.tag == Tag.negWord)
+                    else if (aWord.tag == Tag.negWord) //Negative word
                     {
                         paragraph.negWords = paragraph.negWords + weight;
                         lastTag = Tag.negWord;
                     }
-                    else if (aWord.tag == Tag.posWord)
+                    else if (aWord.tag == Tag.posWord) //Positive Word
                     {
                         paragraph.posWords = paragraph.posWords + weight;
                         lastTag = Tag.posWord;
@@ -143,8 +133,8 @@ namespace SentimentAnalyzer
                     {
                         if (lastTag != Tag.ignore) //Vauge words take on preceding sentiment
                         {
-                            paragraph.wordCount++;//Weight vauge words at half of weight of normal
-                            if (lastTag == Tag.posWord)
+                            paragraph.wordCount++;//Weight vauge words at half of weight of normal words
+                            if (lastTag == Tag.posWord) //Take preceding sentiment
                             {
                                 paragraph.posWords++;
                             }
@@ -166,16 +156,17 @@ namespace SentimentAnalyzer
                     sentence.words.Add(aWord); //add new word
                     //Console.WriteLine(aWord);//Debuging purposes
                 }
-                paragraph.sentences.Add(sentence);
+                paragraph.sentences.Add(sentence); //Add sentence to paragraph
             }
 
-            return paragraph;
+            return paragraph; //return built paragraph
         }
 
         static TaggedWord TagWord(string text) //Tags a word based of Lexicons
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
+            //Search lexicons for a match.
             //Smallest Searches first
             if (Lexicon.SearchContrast(text))
             {
@@ -219,21 +210,6 @@ namespace SentimentAnalyzer
             return word;
         }
 
-        static void InvertTag(ref TaggedWord word, ref int posWords, ref int negwords)
-        {
-            if (word.tag == Tag.posWord)
-            {
-                posWords--;
-                negwords++;
-                word.tag = Tag.negWord;
-            }
-            else if (word.tag == Tag.negWord)
-            {
-                posWords--;
-                negwords++;
-                word.tag = Tag.posWord;
-            }
-        } //Depriciated
         static Tag InvertTag(Tag tag) //Flip pos to neg or neg to pos (all else return no change)
         {
             if (tag == Tag.posWord)
@@ -248,7 +224,7 @@ namespace SentimentAnalyzer
             return tag;
         }
 
-        static TaggedWord TryParseEmojiiString(string text)
+        static TaggedWord TryParseEmojiiString(string text) //Fall back emoji parsing for strings of emojies
         {
             TaggedWord word = new TaggedWord();
             word.word = text;
@@ -269,12 +245,14 @@ namespace SentimentAnalyzer
             return word;
         }
     }
-    //Sentiment Data Structures
+
+    //Sentiment Data Structure
     enum Tag //Used to tag words inside of a sentence
     { 
         ignore, posWord, negWord, target, negation, contrast, vauge
     }
-    struct TaggedWord
+
+    struct TaggedWord //Lowest level of paragraph structure consists of a word and a Tag
     {
         public string word;
         public Tag tag;
@@ -284,12 +262,13 @@ namespace SentimentAnalyzer
             return word + " : " + tag;
         }
     }
-    struct Sentence
+
+    struct Sentence //Sentence is a list of Tagged words
     {
         public List<TaggedWord> words;
-
     }
-    struct Paragraph
+
+    struct Paragraph //Paragraph is a list of sentences with word counts
     {
         public List<Sentence> sentences;
         public int wordCount;

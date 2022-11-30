@@ -1,9 +1,6 @@
 ﻿//Software Engineering 4319 - Fall 2022
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SentimentAnalyzer
@@ -18,7 +15,6 @@ namespace SentimentAnalyzer
         [STAThread]
         static void Main()
         {   
-
             Client.InitializeClient(); //Initilize Network objects on client
             Lexicon.LoadLexicon(Application.StartupPath); //Load lexicon data
 
@@ -27,14 +23,15 @@ namespace SentimentAnalyzer
             Application.SetCompatibleTextRenderingDefault(false);
 
             selectionForm = new SelectionForm();// Get refrence to selection form
-            //Application.Run(selectionForm); //Used to bypass login for testing
+            
             Application.Run(new LoginForm());//Run login form
 
-            if (Client.loggedin)
+            if (Client.loggedin) //If login sucesfull launch selection
             {
                 Lexicon.UpdateLexiconsFromServer();
                 Application.Run(selectionForm);
             }
+            //If not terminate execution
         }
     }
 }

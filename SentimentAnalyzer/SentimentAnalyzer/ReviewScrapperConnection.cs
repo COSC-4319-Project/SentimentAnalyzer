@@ -84,30 +84,30 @@ namespace SentimentAnalyzer
             //Console.WriteLine("Value received from script: " + myString);
         }
 
-        public static string GetPythonPath()
+        public static string GetPythonPath() //Search for most recent installed python version
         {
-            var entries = Environment.GetEnvironmentVariable("path").Split(';');
+            var entries = Environment.GetEnvironmentVariable("path").Split(';'); //Get PATH variables
             string python_location = null;
 
             foreach (string entry in entries)
             {
-                if (entry.ToLower().Contains("python"))
+                if (entry.ToLower().Contains("python")) //Search for python
                 {
-                    var breadcrumbs = entry.Split('\\');
+                    var breadcrumbs = entry.Split('\\'); //Split found path
                     foreach (string breadcrumb in breadcrumbs)
                     {
-                        if (breadcrumb.ToLower().Contains("python"))
+                        if (breadcrumb.ToLower().Contains("python"))//search for python.exe to end
                         {
                             python_location += breadcrumb + '\\';
                             break;
                         }
-                        python_location += breadcrumb + '\\';
+                        python_location += breadcrumb + '\\'; //Add portion of path
                     }
                     break;
                 }
             }
 
-            return python_location;
+            return python_location; //Return found location
         }
     }
     public class Review
@@ -123,11 +123,11 @@ namespace SentimentAnalyzer
             this.rating = rating;
         }
 
-        public override string ToString()
+        public override string ToString() //Print reveiw structure
         {
             return string.Format("Title: {0} Rating: {1} Body: {2}", title, rating, body);
         }
-        public float ParseRating()
+        public float ParseRating() //Parse rating float X from string "X out of 5 stars"
         {
             float rate = 0;
             float.TryParse(rating.Split(' ')[0], out rate);
